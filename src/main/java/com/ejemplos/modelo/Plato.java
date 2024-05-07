@@ -53,7 +53,7 @@ public class Plato implements Serializable {
 //	bi-directional many-to-one association to Reseña
 	//@JsonIgnore
 	@OneToMany(mappedBy="plato")
-	private List<Reseña> reseñas;
+	private List<Resena> resenas;
 
 	public Plato() {
 	}
@@ -175,26 +175,26 @@ public class Plato implements Serializable {
 		this.autor = autor;
 	}
 
-	public List<Reseña> getReseñas() {
-		return this.reseñas;
+	public List<Resena> getResenas() {
+		return this.resenas;
 	}
 
-	public void setReseñas(List<Reseña> reseñas) {
-		this.reseñas = reseñas;
+	public void setResenas(List<Resena> resenas) {
+		this.resenas = resenas;
 	}
 
-	public Reseña addReseña(Reseña reseña) {
-		getReseñas().add(reseña);
-		reseña.setPlato(this);
+	public Resena addResena(Resena resena) {
+		getResenas().add(resena);
+		resena.setPlato(this);
 
-		return reseña;
+		return resena;
 	}
 
-	public Reseña removeReseña(Reseña reseña) {
-		getReseñas().remove(reseña);
-		reseña.setPlato(null);
+	public Resena removeResena(Resena resena) {
+		getResenas().remove(resena);
+		resena.setPlato(null);
 
-		return reseña;
+		return resena;
 	}
 
 }

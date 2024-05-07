@@ -13,8 +13,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  */
 @Entity
 @Table(name="reseña")
-@NamedQuery(name="Reseña.findAll", query="SELECT r FROM Reseña r")
-public class Reseña implements Serializable {
+@NamedQuery(name="Resena.findAll", query="SELECT r FROM Resena r")
+public class Resena implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -28,7 +28,7 @@ public class Reseña implements Serializable {
 	private int puntuacion;
 
 	//bi-directional many-to-one association to Plato
-	//@JsonIgnore
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="platoid")
 	private Plato plato;
@@ -38,7 +38,7 @@ public class Reseña implements Serializable {
 	@JoinColumn(name="usuarioid")
 	private Usuario usuario;
 
-	public Reseña() {
+	public Resena() {
 	}
 
 	public int getId() {

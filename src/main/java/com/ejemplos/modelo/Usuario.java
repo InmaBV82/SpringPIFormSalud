@@ -43,7 +43,7 @@ public class Usuario implements Serializable {
 	//bi-directional many-to-one association to Reseña
 	@JsonIgnore
 	@OneToMany(mappedBy="usuario")
-	private List<Reseña> reseñas;
+	private List<Resena> reseñas;
 
 	public Usuario() {
 
@@ -133,22 +133,22 @@ public class Usuario implements Serializable {
 		return plato;
 	}
 
-	public List<Reseña> getReseñas() {
+	public List<Resena> getReseñas() {
 		return this.reseñas;
 	}
 
-	public void setReseñas(List<Reseña> reseñas) {
+	public void setReseñas(List<Resena> reseñas) {
 		this.reseñas = reseñas;
 	}
 
-	public Reseña addReseña(Reseña reseña) {
+	public Resena addReseña(Resena reseña) {
 		getReseñas().add(reseña);
 		reseña.setUsuario(this);
 
 		return reseña;
 	}
 
-	public Reseña removeReseña(Reseña reseña) {
+	public Resena removeReseña(Resena reseña) {
 		getReseñas().remove(reseña);
 		reseña.setUsuario(null);
 

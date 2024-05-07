@@ -3,7 +3,7 @@ package com.ejemplos.DTO;
 import java.util.Date;
 import java.util.List;
 
-import com.ejemplos.modelo.Reseña;
+import com.ejemplos.modelo.Resena;
 import com.ejemplos.modelo.Usuario;
 
 import jakarta.persistence.Temporal;
@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @AllArgsConstructor
-public class ReseñaDTO {
+public class ResenaDTO {
 	
 	@Getter
 	@Setter
@@ -38,18 +38,18 @@ public class ReseñaDTO {
 
 
 
-	public ReseñaDTO(Reseña reseña) {
-		this.id=reseña.getId();
-		this.comentario=reseña.getComentario();
-		this.fecha=reseña.getFecha();
-		this.puntuacion=reseña.getPuntuacion();
-		this.autor=reseña.getUsuario().getNombre();
+	public ResenaDTO(Resena resena) {
+		this.id=resena.getId();
+		this.comentario=resena.getComentario();
+		this.fecha=resena.getFecha();
+		this.puntuacion=resena.getPuntuacion();
+		this.autor=resena.getUsuario().getNombre();
 
 	}
 
 
 
-	public ReseñaDTO() {
+	public ResenaDTO() {
 		
 	}
 	

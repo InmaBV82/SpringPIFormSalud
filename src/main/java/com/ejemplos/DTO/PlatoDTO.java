@@ -1,7 +1,11 @@
 package com.ejemplos.DTO;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.ejemplos.modelo.Plato;
+import com.ejemplos.modelo.Resena;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,6 +47,10 @@ public class PlatoDTO {
 	@Setter
 	private String autor;
 	
+	@Getter
+	@Setter
+	private List<ResenaDTO> resenas;
+	
 
 	public PlatoDTO(Plato plato) {
 		this.id=plato.getId();
@@ -53,10 +61,21 @@ public class PlatoDTO {
 		this.foto=plato.getFoto();
 		this.ingredientes=plato.getIngredientes();
 		this.tiempo=plato.getTiempo();
+		this.resenas=convertListResenasToListResenasDTO(plato.getResenas());
 		
 
 	}
 	
+	public List<ResenaDTO> convertListResenasToListResenasDTO(List<Resena> resenas) {
+		
+		List<ResenaDTO> resenasDTO = new ArrayList<>();
+	    for (Resena resena : resenas) {
+	    	ResenaDTO resenaDTO = new ResenaDTO(resena);
+	        resenasDTO.add(resenaDTO);
+	    }
+		
+		return resenasDTO;
+	}
 	
 
 }

@@ -3,7 +3,7 @@ package com.ejemplos.DTO;
 import java.util.List;
 
 import com.ejemplos.modelo.Categoria;
-import com.ejemplos.modelo.Reseña;
+import com.ejemplos.modelo.Resena;
 import com.ejemplos.modelo.Usuario;
 
 import lombok.AllArgsConstructor;
