@@ -28,7 +28,7 @@ public class Reseña implements Serializable {
 	private int puntuacion;
 
 	//bi-directional many-to-one association to Plato
-	@JsonIgnore
+	//@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="platoid")
 	private Plato plato;

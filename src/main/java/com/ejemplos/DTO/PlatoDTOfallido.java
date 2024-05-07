@@ -1,14 +1,17 @@
 package com.ejemplos.DTO;
 
+import java.util.List;
 
-import com.ejemplos.modelo.Plato;
+import com.ejemplos.modelo.Categoria;
+import com.ejemplos.modelo.Reseña;
+import com.ejemplos.modelo.Usuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @AllArgsConstructor
-public class PlatoDTO {
+public class PlatoDTOfallido {
 	
 	@Getter
 	@Setter
@@ -43,17 +46,18 @@ public class PlatoDTO {
 	@Setter
 	private String autor;
 	
+	@Getter
+	@Setter
+	private List<Integer> puntuacion;
+	
+	
+	@Getter
+	@Setter
+	private List<String> comentarios;
+	
 
-	public PlatoDTO(Plato plato) {
-		this.id=plato.getId();
-		this.nombre=plato.getNombre();
-		this.autor=plato.getAutor().getNombre();
-		this.categoriaNombre=plato.getCategoria().getNombre();
-		this.descripcion=plato.getDescripcion();
-		this.foto=plato.getFoto();
-		this.ingredientes=plato.getIngredientes();
-		this.tiempo=plato.getTiempo();
-		
+	public PlatoDTOfallido() {
+		super();
 
 	}
 	

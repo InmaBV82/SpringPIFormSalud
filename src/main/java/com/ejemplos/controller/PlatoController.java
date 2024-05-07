@@ -55,83 +55,81 @@ public class PlatoController {
 			}else {
 				List<PlatoDTO> platosDTO = new ArrayList<>();
 			    for (Plato plato : platos) {
-			        PlatoDTO platoDTO = new PlatoDTO();
-			        platoDTO.setId(plato.getId());
-			        platoDTO.setDescripcion(plato.getDescripcion());
-			        platoDTO.setFoto(plato.getFoto());
-			        platoDTO.setIngredientes(plato.getIngredientes());
-			        platoDTO.setTiempo(plato.getTiempo());
-			        
-			        if (plato.getCategoria() != null) {
-			            platoDTO.setCategoriaNombre(plato.getCategoria().getNombre());
-			        }
-			        
-			        if (plato.getAutor() != null) {
-			            platoDTO.setAutor(plato.getAutor().getNombre());
-			        }
-			     
-			        if (!plato.getReseñas().isEmpty()) {
-			        	List<String> listaComentarios=new ArrayList<>();
-			        	for (int i = 0; i < plato.getReseñas().size(); i++) {
-			        		listaComentarios.add(plato.getReseñas().get(i).getComentario());
-				            platoDTO.setPuntuacion(plato.getReseñas().get(i).getPuntuacion());
-	
-						}
-			        	platoDTO.setComentarios(listaComentarios);
+			    	PlatoDTO platoDTO = new PlatoDTO(plato);
+			    	 platosDTO.add(platoDTO);
 			            
-			        }
-			        platosDTO.add(platoDTO);
-			    }
+			       }
 			    return ResponseEntity.ok(platosDTO);
 			}
 			
 		}
 	
 
-	//Platos de una Categoria determinada
-	@GetMapping("/platosCategoria/{categoriaid}")
-	public ResponseEntity<?> platosDeCategoria(@PathVariable int categoriaid) {
-		List<Plato> platosCategoria = platoRepositorio.findPlatosDeCategoria(categoriaid);
-		
-		if (platosCategoria.isEmpty()) {
-		//devolvemos una respuesta como instancia de ResposeEntity
-			return ResponseEntity.notFound().build();
+	//Platos de una Categoria determinada MEJORADO
+		@GetMapping("/platosCategoria/{categoriaid}")
+		public ResponseEntity<?> platosDeCategoria(@PathVariable int categoriaid) {
+			List<Plato> platosCategoria = platoRepositorio.findPlatosDeCategoria(categoriaid);
 			
-		} else {
-			
-			List<PlatoDTO> platosDTO = new ArrayList<>();
-		    for (Plato plato : platosCategoria) {
-		        PlatoDTO platoDTO = new PlatoDTO();
-		        platoDTO.setId(plato.getId());
-		        platoDTO.setNombre(plato.getNombre());
-		        platoDTO.setDescripcion(plato.getDescripcion());
-		        platoDTO.setFoto(plato.getFoto());
-		        platoDTO.setIngredientes(plato.getIngredientes());
-		        platoDTO.setTiempo(plato.getTiempo());
-		        
-		        if (plato.getCategoria() != null) {
-		            platoDTO.setCategoriaNombre(plato.getCategoria().getNombre());
-		        }
-		        
-		        if (plato.getAutor() != null) {
-		            platoDTO.setAutor(plato.getAutor().getNombre());
-		        }
-		     
-		        if (!plato.getReseñas().isEmpty()) {
-		        	List<String> listaComentarios=new ArrayList<>();
-		        	for (int i = 0; i < plato.getReseñas().size(); i++) {
-		        		listaComentarios.add(plato.getReseñas().get(i).getComentario());
-			            platoDTO.setPuntuacion(plato.getReseñas().get(i).getPuntuacion());
-
-					}
-		        	platoDTO.setComentarios(listaComentarios);
-		            
-		        }
-		        platosDTO.add(platoDTO);
-		    }
-		    return ResponseEntity.ok(platosDTO);
+			if (platosCategoria.isEmpty()) {
+			//devolvemos una respuesta como instancia de ResposeEntity
+				return ResponseEntity.notFound().build();
+				
+			} else {
+				
+				List<PlatoDTO> platosDTO = new ArrayList<>();
+			    for (Plato plato : platosCategoria) {
+			    	PlatoDTO platoDTO = new PlatoDTO(plato);
+			        platosDTO.add(platoDTO);
+			    }
+			    return ResponseEntity.ok(platosDTO);
+			}
 		}
-	}
+		
+//	@GetMapping("/platosCategoria/{categoriaid}")
+//	public ResponseEntity<?> platosDeCategoria(@PathVariable int categoriaid) {
+//		List<Plato> platosCategoria = platoRepositorio.findPlatosDeCategoria(categoriaid);
+//		
+//		if (platosCategoria.isEmpty()) {
+//		//devolvemos una respuesta como instancia de ResposeEntity
+//			return ResponseEntity.notFound().build();
+//			
+//		} else {
+//			
+//			List<PlatoDTO> platosDTO = new ArrayList<>();
+//		    for (Plato plato : platosCategoria) {
+//		        PlatoDTO platoDTO = new PlatoDTO();
+//		        platoDTO.setId(plato.getId());
+//		        platoDTO.setNombre(plato.getNombre());
+//		        platoDTO.setDescripcion(plato.getDescripcion());
+//		        platoDTO.setFoto(plato.getFoto());
+//		        platoDTO.setIngredientes(plato.getIngredientes());
+//		        platoDTO.setTiempo(plato.getTiempo());
+//		        
+//		        if (plato.getCategoria() != null) {
+//		            platoDTO.setCategoriaNombre(plato.getCategoria().getNombre());
+//		        }
+//		        
+//		        if (plato.getAutor() != null) {
+//		            platoDTO.setAutor(plato.getAutor().getNombre());
+//		        }
+//		     
+//		        if (!plato.getReseñas().isEmpty()) {
+//		        	List<String> listaComentarios=new ArrayList<>();
+//		        	List<Integer> puntuaciones=new ArrayList<>();
+//		        	for (int i = 0; i < plato.getReseñas().size(); i++) {
+//		        		listaComentarios.add(plato.getReseñas().get(i).getComentario());
+//		        		puntuaciones.add(plato.getReseñas().get(i).getPuntuacion());
+//
+//					}
+//		        	platoDTO.setComentarios(listaComentarios);
+//		        	platoDTO.setPuntuacion(puntuaciones);
+//		            
+//		        }
+//		        platosDTO.add(platoDTO);
+//		    }
+//		    return ResponseEntity.ok(platosDTO);
+//		}
+//	}
 	
 	//BUSCAR UN PLATO POR ID
 	@GetMapping("/plato/{id}")

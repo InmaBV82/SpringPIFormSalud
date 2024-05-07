@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ejemplos.DAO.CategoriaRepositorio;
-import com.ejemplos.DAO.TipoMenuRepositorio;
+import com.ejemplos.DAO.TipoRepositorio;
 import com.ejemplos.modelo.Categoria;
 import com.ejemplos.modelo.Tipo;
 
@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class TipoController {
 	
 	@Autowired 
-	private TipoMenuRepositorio tipoRepositorio;
+	private TipoRepositorio tipoRepositorio;
 
 	
 	/**
