@@ -29,12 +29,12 @@ public class Resena implements Serializable {
 
 	//bi-directional many-to-one association to Plato
 	@JsonIgnore
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="platoid")
 	private Plato plato;
 
 	//bi-directional many-to-one association to Usuario
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="usuarioid")
 	private Usuario usuario;
 

@@ -52,7 +52,7 @@ public class Plato implements Serializable {
 
 //	bi-directional many-to-one association to Reseña
 	//@JsonIgnore
-	@OneToMany(mappedBy="plato")
+	@OneToMany(mappedBy="plato", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Resena> resenas;
 
 	public Plato() {

@@ -70,7 +70,7 @@ public class UsuarioController {
 	public ResponseEntity<?> crear(@RequestBody Usuario nuevo) {
 		
 		 if (nuevo.getRol() == null || nuevo.getRol().isEmpty()) {
-			 nuevo.setRol("usuario");  // Establecer el valor predeterminado a usuario
+			 nuevo.setRol("usuario");  
 		    }
 		
 		usuarioRepositorio.save(nuevo);

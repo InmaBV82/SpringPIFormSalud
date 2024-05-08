@@ -42,7 +42,7 @@ public class Usuario implements Serializable {
 
 	//bi-directional many-to-one association to Reseña
 	@JsonIgnore
-	@OneToMany(mappedBy="usuario")
+	@OneToMany(mappedBy="usuario", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Resena> reseñas;
 
 	public Usuario() {
