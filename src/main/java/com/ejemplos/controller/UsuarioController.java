@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ejemplos.DAO.UsuarioRepositorio;
+import com.ejemplos.DTO.UsuarioDTO;
 import com.ejemplos.excepciones.ApiError;
 import com.ejemplos.excepciones.UsuarioNotFoundException;
 import com.ejemplos.modelo.Usuario;
@@ -64,6 +65,17 @@ public class UsuarioController {
 	
 	
 }
+	//LOGIN
+	@PostMapping("/login")
+	public ResponseEntity<?> AUTENTICACION(@RequestBody UsuarioDTO usuLogin) {
+		
+		Usuario usuario=usuarioRepositorio.findByEmailAndPassword(usuLogin.getEmail(), usuLogin.getPassword());
+
+		return ResponseEntity.ok(usuario);
+			
+		
+	}
+	
 	
 	//CREAR UN USUARIO NUEVO
 	@PostMapping("/usuarioNuevo")

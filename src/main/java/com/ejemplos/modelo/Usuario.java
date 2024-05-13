@@ -22,10 +22,12 @@ public class Usuario implements Serializable {
 	@Id
 	private int id;
 
+	@Column(name = "email")
 	private String email;
 
 	private String nombre;
 
+	@Column(name = "password")
 	private String password;
 
 	private String rol;
