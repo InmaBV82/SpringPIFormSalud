@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ejemplos.DAO.PlatoRepositorio;
 import com.ejemplos.DTO.PlatoDTO;
+import com.ejemplos.Repositorios.PlatoRepositorio;
 import com.ejemplos.modelo.Plato;
 
 

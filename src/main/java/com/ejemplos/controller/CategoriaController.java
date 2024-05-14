@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ejemplos.DAO.CategoriaRepositorio;
+import com.ejemplos.Repositorios.CategoriaRepositorio;
 import com.ejemplos.modelo.Categoria;
 
 import lombok.RequiredArgsConstructor;

@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ejemplos.DAO.UsuarioRepositorio;
 import com.ejemplos.DTO.UsuarioDTO;
+import com.ejemplos.Repositorios.UsuarioRepositorio;
 import com.ejemplos.excepciones.ApiError;
 import com.ejemplos.excepciones.UsuarioNotFoundException;
 import com.ejemplos.modelo.Usuario;

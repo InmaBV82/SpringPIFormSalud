@@ -1,4 +1,4 @@
-package com.ejemplos.DAO;
+package com.ejemplos.Repositorios;
 
 import java.util.List;
 

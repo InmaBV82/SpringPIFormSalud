@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.ejemplos.DAO.PlatoRepositorio;
-import com.ejemplos.DAO.ResenaRepositorio;
-import com.ejemplos.DAO.UsuarioRepositorio;
 import com.ejemplos.DTO.PlatoDTO;
 import com.ejemplos.DTO.ResenaAddDTO;
 import com.ejemplos.DTO.ResenaDTO;
+import com.ejemplos.Repositorios.PlatoRepositorio;
+import com.ejemplos.Repositorios.ResenaRepositorio;
+import com.ejemplos.Repositorios.UsuarioRepositorio;
 import com.ejemplos.modelo.Plato;
 import com.ejemplos.modelo.Resena;
 import com.ejemplos.modelo.Usuario;
