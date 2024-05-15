@@ -4,6 +4,8 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 /**
  * The persistent class for the menu database table.
@@ -21,8 +23,9 @@ public class Menu implements Serializable {
 	private String nombre;
 
 	//bi-directional many-to-one association to Menuplato
-	@OneToMany(mappedBy="menu")
-	private List<Menuplato> menuplatos;
+//	@JsonIgnore
+//	@OneToMany(mappedBy="menu")
+//	private List<Menuplato> menuplatos;
 	
 	//bi-directional many-to-one association to Usuario
 	@ManyToOne
@@ -49,29 +52,29 @@ public class Menu implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public List<Menuplato> getMenuplatos() {
-		return this.menuplatos;
-	}
-
-	public void setMenuplatos(List<Menuplato> menuplatos) {
-		this.menuplatos = menuplatos;
-	}
-
-	public Menuplato addMenuplato(Menuplato menuplato) {
-		getMenuplatos().add(menuplato);
-		menuplato.setMenu(this);
-
-		return menuplato;
-	}
-
-	public Menuplato removeMenuplato(Menuplato menuplato) {
-		getMenuplatos().remove(menuplato);
-		menuplato.setMenu(null);
-
-		return menuplato;
-	}
+//	public List<Menuplato> getMenuplatos() {
+//		return this.menuplatos;
+//	}
+//
+//	public void setMenuplatos(List<Menuplato> menuplatos) {
+//		this.menuplatos = menuplatos;
+//	}
+//
+//	public Menuplato addMenuplato(Menuplato menuplato) {
+//		getMenuplatos().add(menuplato);
+//		menuplato.setMenu(this);
+//
+//		return menuplato;
+//	}
+//
+//	public Menuplato removeMenuplato(Menuplato menuplato) {
+//		getMenuplatos().remove(menuplato);
+//		menuplato.setMenu(null);
+//
+//		return menuplato;
+//	}
 	
-	public Tipo getTipoa() {
+	public Tipo getTipo() {
 		return this.tipo;
 	}
 

@@ -131,16 +131,21 @@ public class PlatoController {
 //		}
 //	}
 	
-	//BUSCAR UN PLATO POR ID
-	@GetMapping("/plato/{id}")
+	//BUSCAR UN PLATOD POR ID Y CONVERTIRLO A DTO
+	@GetMapping("/platoDTO/{id}")
 	public ResponseEntity<?> obtenerUno(@PathVariable int id) {
 
-		Plato result=platoRepositorio.findById(id).orElse(null);
+		Plato plato=platoRepositorio.findById(id).orElse(null);
 		//notFound es el 404
-		if(result==null)
+		if(plato==null) {
 			return ResponseEntity.notFound().build();
-		else
-			return ResponseEntity.ok(result);
+		}
+		else {
+			
+			PlatoDTO platoDto=new PlatoDTO(plato);
+			return ResponseEntity.ok(platoDto);
+		}
+			
 	
 	
 }
