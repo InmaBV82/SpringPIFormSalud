@@ -32,10 +32,6 @@ public class UsuarioController {
 	private UsuarioRepositorio usuarioRepositorio;
 
 	
-	/**
-	* Obtenemos todos los categorias *
-	* @return 404 si no hay categorias, 200 y lista de categorias si hay uno o más
-	*/
 	//LISTAR TODOS LOS USUARIOS
 	@GetMapping("/usuarios")
 	public ResponseEntity<?> obtenerTodos() {

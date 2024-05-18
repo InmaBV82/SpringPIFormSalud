@@ -8,9 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.ejemplos.modelo.Historico;
-import com.ejemplos.modelo.HistoricoPK;
 
-public interface HistoricoRepositorio extends JpaRepository<Historico, HistoricoPK> {
+public interface HistoricoRepositorio extends JpaRepository<Historico, Integer> {
 	
 	@Query("SELECT h FROM Historico h WHERE h.usuario.id = :usuarioid")
     List<Historico> findHistoricosUsuario(@Param("usuarioid") int usuarioid);

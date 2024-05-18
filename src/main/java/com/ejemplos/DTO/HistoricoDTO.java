@@ -3,7 +3,6 @@ package com.ejemplos.DTO;
 import java.util.Date;
 
 import com.ejemplos.modelo.Historico;
-import com.ejemplos.modelo.HistoricoPK;
 
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -14,9 +13,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class HistoricoDTO {
 	
-//	@Getter
-//	@Setter
-//	private HistoricoPK id;
+	@Getter
+	@Setter
+	private int idHistorico;
 	
 	@Getter
 	@Setter
@@ -35,19 +34,20 @@ public class HistoricoDTO {
 	@Getter
 	@Setter
 	private String nombrePlato;
-	
+//	
 //	@Getter
 //	@Setter
 //	private int usuarioid;
 
 
 	public HistoricoDTO(Historico historico) {
-		//this.id=historico.getId();
-		this.fecha=historico.getId().getFecha();
+		this.idHistorico=historico.getId();
+		this.fecha=historico.getFecha();
 		this.momentodia=historico.getMomentodia();
 		this.platoid=historico.getPlato().getId();
 		this.nombrePlato=historico.getPlato().getNombre();
 		//this.usuarioid=historico.getUsuario().getId();
+
 
 	}
 

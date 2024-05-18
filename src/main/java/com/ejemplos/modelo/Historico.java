@@ -1,6 +1,10 @@
 package com.ejemplos.modelo;
 
 import java.io.Serializable;
+import java.util.Date;
+
+import com.ejemplos.DTO.HistoricoDTO;
+
 import jakarta.persistence.*;
 
 
@@ -14,8 +18,11 @@ import jakarta.persistence.*;
 public class Historico implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private HistoricoPK id;
+	@Id
+	private int id;
+	
+	@Temporal(TemporalType.DATE)
+	private Date fecha;
 
 	private String momentodia;
 
@@ -30,14 +37,24 @@ public class Historico implements Serializable {
 	private Usuario usuario;
 
 	public Historico() {
+	
 	}
 
-	public HistoricoPK getId() {
+
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(HistoricoPK id) {
+	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public Date getFecha() {
+		return this.fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
 	}
 
 	public String getMomentodia() {
@@ -52,8 +69,8 @@ public class Historico implements Serializable {
 		return this.plato;
 	}
 
-	public void setPlato(Plato plato) {
-		this.plato = plato;
+	public void setPlato(Plato i) {
+		this.plato = i;
 	}
 
 	public Usuario getUsuario() {

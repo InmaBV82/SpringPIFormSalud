@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ejemplos.DTO.PlatoDTO;
+import com.ejemplos.DTO.ResenaDTO;
 import com.ejemplos.Repositorios.PlatoRepositorio;
 import com.ejemplos.modelo.Plato;
-
+import com.ejemplos.modelo.Resena;
 
 import lombok.RequiredArgsConstructor;
 
@@ -147,17 +148,39 @@ public class PlatoController {
 		}
 			
 	
+	}
 	
-}
+	
+	//Resenas de un usuario determinada MEJORADO
+	@GetMapping("/platosUsuario/{autorid}")
+	public ResponseEntity<?> platosDeUsuario(@PathVariable int autorid) {
+		List<Plato> platosUsu = platoRepositorio.findPlatosUsuario(autorid);
+		
+		if (platosUsu.isEmpty()) {
+		//devolvemos una respuesta como instancia de ResposeEntity
+			return ResponseEntity.notFound().build();
+			
+		} else {
+			
+			List<PlatoDTO> platosDTO = new ArrayList<>();
+		    for (Plato plato : platosUsu) {
+		    	PlatoDTO platoDTO = new PlatoDTO(plato);
+		    	platosDTO.add(platoDTO);
+		    }
+		    return ResponseEntity.ok(platosDTO);
+		}
+	}
+	
+	
 	//ADD PLATO
 	@PostMapping("/plato")
 	public ResponseEntity<?> crear(@RequestBody Plato nuevo) {
 		
 		platoRepositorio.save(nuevo);
-		return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
-			
+		return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);	
 		
 	}
+	
 	
 	//EDITAR UN PLATO
 	@PutMapping("/plato/{id}")
