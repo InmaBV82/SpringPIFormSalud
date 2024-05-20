@@ -3,6 +3,7 @@ package com.ejemplos.DTO;
 import java.util.List;
 
 import com.ejemplos.modelo.Categoria;
+import com.ejemplos.modelo.Plato;
 import com.ejemplos.modelo.Resena;
 import com.ejemplos.modelo.Usuario;
 
@@ -19,12 +20,17 @@ public class PlatoAddDTO {
 
 	@Getter
 	@Setter
-	private String descripcion;
-
-
+	private String nombre;
+	
+	
 	@Getter
 	@Setter
-	private String foto;
+	private String descripcion;
+
+//
+//	@Getter
+//	@Setter
+//	private String foto;
 
 	@Getter
 	@Setter
@@ -36,24 +42,23 @@ public class PlatoAddDTO {
 	
 	@Getter
 	@Setter
+	private int categoriaid;
+	
+	@Getter
+	@Setter
 	private String categoriaNombre;
 	
-	@Getter
-	@Setter
-	private String autor;
 	
-	@Getter
-	@Setter
-	private int puntuacion;
-	
-	
-	@Getter
-	@Setter
-	private List<String> comentarios;
 	
 
-	public PlatoAddDTO() {
-		super();
+	public PlatoAddDTO(Plato plato) {
+		this.id=plato.getId();
+		this.nombre=plato.getNombre();
+		this.descripcion=plato.getDescripcion();
+		this.ingredientes=plato.getIngredientes();
+		this.tiempo=plato.getTiempo();
+		this.categoriaid=plato.getCategoria().getId();
+		this.categoriaNombre=plato.getCategoria().getNombre();
 
 	}
 	

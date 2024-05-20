@@ -30,6 +30,9 @@ public class UsuarioController {
 	
 	@Autowired 
 	private UsuarioRepositorio usuarioRepositorio;
+	
+//	@Autowired
+//    private PasswordEncoder passwordEncoder;
 
 	
 	//LISTAR TODOS LOS USUARIOS
@@ -75,12 +78,15 @@ public class UsuarioController {
 	
 	//CREAR UN USUARIO NUEVO
 	@PostMapping("/usuarioNuevo")
-	public ResponseEntity<?> crear(@RequestBody Usuario nuevo) {
+	public ResponseEntity<?> registro(@RequestBody Usuario nuevo) {
 		
 		 if (nuevo.getRol() == null || nuevo.getRol().isEmpty()) {
 			 nuevo.setRol("usuario");  
 		    }
-		
+		 
+		// Encriptar la contraseña del usuario
+//		String encodedPassword = passwordEncoder.encode(nuevo.getPassword());
+//		nuevo.setPassword(encodedPassword);
 		usuarioRepositorio.save(nuevo);
 		return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
 			

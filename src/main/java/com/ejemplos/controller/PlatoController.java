@@ -15,11 +15,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ejemplos.DTO.PlatoAddDTO;
 import com.ejemplos.DTO.PlatoDTO;
 import com.ejemplos.DTO.ResenaDTO;
+import com.ejemplos.Repositorios.CategoriaRepositorio;
 import com.ejemplos.Repositorios.PlatoRepositorio;
+import com.ejemplos.Repositorios.UsuarioRepositorio;
+import com.ejemplos.modelo.Categoria;
+import com.ejemplos.modelo.Historico;
 import com.ejemplos.modelo.Plato;
 import com.ejemplos.modelo.Resena;
+import com.ejemplos.modelo.Usuario;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +35,12 @@ public class PlatoController {
 	
 	@Autowired 
 	private PlatoRepositorio platoRepositorio;
+	
+	@Autowired 
+	private UsuarioRepositorio usuarioRepositorio;
+	
+	@Autowired 
+	private CategoriaRepositorio categoriaRepositorio;
 	
 	
 	//Todos los platos
@@ -86,52 +98,7 @@ public class PlatoController {
 			}
 		}
 		
-//	@GetMapping("/platosCategoria/{categoriaid}")
-//	public ResponseEntity<?> platosDeCategoria(@PathVariable int categoriaid) {
-//		List<Plato> platosCategoria = platoRepositorio.findPlatosDeCategoria(categoriaid);
-//		
-//		if (platosCategoria.isEmpty()) {
-//		//devolvemos una respuesta como instancia de ResposeEntity
-//			return ResponseEntity.notFound().build();
-//			
-//		} else {
-//			
-//			List<PlatoDTO> platosDTO = new ArrayList<>();
-//		    for (Plato plato : platosCategoria) {
-//		        PlatoDTO platoDTO = new PlatoDTO();
-//		        platoDTO.setId(plato.getId());
-//		        platoDTO.setNombre(plato.getNombre());
-//		        platoDTO.setDescripcion(plato.getDescripcion());
-//		        platoDTO.setFoto(plato.getFoto());
-//		        platoDTO.setIngredientes(plato.getIngredientes());
-//		        platoDTO.setTiempo(plato.getTiempo());
-//		        
-//		        if (plato.getCategoria() != null) {
-//		            platoDTO.setCategoriaNombre(plato.getCategoria().getNombre());
-//		        }
-//		        
-//		        if (plato.getAutor() != null) {
-//		            platoDTO.setAutor(plato.getAutor().getNombre());
-//		        }
-//		     
-//		        if (!plato.getReseñas().isEmpty()) {
-//		        	List<String> listaComentarios=new ArrayList<>();
-//		        	List<Integer> puntuaciones=new ArrayList<>();
-//		        	for (int i = 0; i < plato.getReseñas().size(); i++) {
-//		        		listaComentarios.add(plato.getReseñas().get(i).getComentario());
-//		        		puntuaciones.add(plato.getReseñas().get(i).getPuntuacion());
-//
-//					}
-//		        	platoDTO.setComentarios(listaComentarios);
-//		        	platoDTO.setPuntuacion(puntuaciones);
-//		            
-//		        }
-//		        platosDTO.add(platoDTO);
-//		    }
-//		    return ResponseEntity.ok(platosDTO);
-//		}
-//	}
-	
+
 	//BUSCAR UN PLATOD POR ID Y CONVERTIRLO A DTO
 	@GetMapping("/platoDTO/{id}")
 	public ResponseEntity<?> obtenerUno(@PathVariable int id) {
@@ -151,7 +118,7 @@ public class PlatoController {
 	}
 	
 	
-	//Resenas de un usuario determinada MEJORADO
+	//Platos de un usuario determinada convertidos en DTO
 	@GetMapping("/platosUsuario/{autorid}")
 	public ResponseEntity<?> platosDeUsuario(@PathVariable int autorid) {
 		List<Plato> platosUsu = platoRepositorio.findPlatosUsuario(autorid);
@@ -172,13 +139,30 @@ public class PlatoController {
 	}
 	
 	
-	//ADD PLATO
-	@PostMapping("/plato")
-	public ResponseEntity<?> crear(@RequestBody Plato nuevo) {
+	// ADD PLATO A UN USUARIO LOGUEADO
+	@PostMapping("/addPlatoDTO/{usuarioid}")
+	public ResponseEntity<?> crear(@PathVariable int usuarioid, @RequestBody PlatoAddDTO nuevo) {
+
+		Usuario usu = usuarioRepositorio.findById(usuarioid).orElse(null);
+		Categoria cat= categoriaRepositorio.findById(nuevo.getCategoriaid()).orElse(null);
 		
-		platoRepositorio.save(nuevo);
-		return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);	
-		
+		if (usu == null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no ha sido encontrado");
+		}
+
+		Plato platoConvertido = new Plato();
+		platoConvertido.setId(nuevo.getId());
+		platoConvertido.setNombre(nuevo.getNombre());
+		platoConvertido.setDescripcion(nuevo.getDescripcion());
+		platoConvertido.setIngredientes(nuevo.getIngredientes());
+		platoConvertido.setTiempo(nuevo.getTiempo());
+		platoConvertido.setCategoria(cat);
+		platoConvertido.setAutor(usu);
+
+		platoRepositorio.save(platoConvertido);
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
+
 	}
 	
 	
