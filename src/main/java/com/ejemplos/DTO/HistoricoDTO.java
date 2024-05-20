@@ -34,10 +34,10 @@ public class HistoricoDTO {
 	@Getter
 	@Setter
 	private String nombrePlato;
-//	
-//	@Getter
-//	@Setter
-//	private int usuarioid;
+	
+	@Getter
+	@Setter
+	private int usuarioid;
 
 
 	public HistoricoDTO(Historico historico) {
@@ -46,7 +46,7 @@ public class HistoricoDTO {
 		this.momentodia=historico.getMomentodia();
 		this.platoid=historico.getPlato().getId();
 		this.nombrePlato=historico.getPlato().getNombre();
-		//this.usuarioid=historico.getUsuario().getId();
+		this.usuarioid=historico.getUsuario().getId();
 
 
 	}

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -77,8 +78,27 @@ public class HistoricoController {
 		}
 		
 	}
+	//MOSTRAR UN HISTORICO SEGUN SU ID
+		@GetMapping("/historicoDTO/{id}")
+		public ResponseEntity<?> obtenerUno(@PathVariable int id) {
+
+			Historico historico=historicoRepositorio.findById(id).orElse(null);
+			//notFound es el 404
+			if(historico==null)
+				return ResponseEntity.notFound().build();
+			else {
+				
+				HistoricoDTO historicoDto=new HistoricoDTO(historico);
+				return ResponseEntity.ok(historicoDto);
+			}
+				
+		
+		
+	}
 	
-		//hISTORICOS de un usuario determinada 
+	
+	
+	//hISTORICOS de un usuario determinada 
 	@GetMapping("/historicosUsuario/{usuarioid}")
 	public ResponseEntity<?> platosDeCategoria(@PathVariable int usuarioid) {
 		List<Historico> historicosUsu = historicoRepositorio.findHistoricosUsuario(usuarioid);
@@ -122,6 +142,38 @@ public class HistoricoController {
 	    historicoRepositorio.save(historicoConvertido);  
 
 	    return ResponseEntity.status(HttpStatus.CREATED).body(nuevoDto);
+	}
+	
+	//UPDATE HISTORICODTO	
+	@PutMapping("/editHistoricoDTO/{idHistorico}")
+	@Transactional
+	public ResponseEntity<?> update(@PathVariable int idHistorico, @RequestBody HistoricoDTO updateDto) {
+		
+		Usuario usu = usuarioRepositorio.findById(updateDto.getUsuarioid()).orElse(null);
+		Plato plato= platoRepositorio.findById(updateDto.getPlatoid()).orElse(null);
+		Historico historicoConvertido =historicoRepositorio.findById(idHistorico).orElse(null); 
+	   
+		if (usu == null) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no ha sido encontrado");
+	    }
+		
+		if(historicoConvertido==null) {
+			return ResponseEntity.notFound().build();
+		}
+		else {
+
+		 
+		    historicoConvertido.setFecha(updateDto.getFecha());
+		    historicoConvertido.setMomentodia(updateDto.getMomentodia());
+		    historicoConvertido.setPlato(plato);
+		    historicoConvertido.setUsuario(usu);
+
+		    historicoRepositorio.save(historicoConvertido);  
+
+		    return ResponseEntity.status(HttpStatus.CREATED).body(updateDto);
+			
+		}
+		
 	}
 	
 	
