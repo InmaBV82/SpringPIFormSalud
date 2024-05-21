@@ -78,24 +78,24 @@ public class HistoricoController {
 		}
 		
 	}
-	//MOSTRAR UN HISTORICO SEGUN SU ID
-		@GetMapping("/historicoDTO/{id}")
-		public ResponseEntity<?> obtenerUno(@PathVariable int id) {
+	//MOSTRAR UN HISTORICODTO SEGUN SU ID
+	@GetMapping("/historicoDTO/{id}")
+	public ResponseEntity<?> obtenerUno(@PathVariable int id) {
 
-			Historico historico=historicoRepositorio.findById(id).orElse(null);
-			//notFound es el 404
-			if(historico==null)
-				return ResponseEntity.notFound().build();
-			else {
-				
-				HistoricoDTO historicoDto=new HistoricoDTO(historico);
-				return ResponseEntity.ok(historicoDto);
-			}
-				
-		
-		
-	}
+		Historico historico=historicoRepositorio.findById(id).orElse(null);
+		//notFound es el 404
+		if(historico==null)
+			return ResponseEntity.notFound().build();
+		else {
+			
+			HistoricoDTO historicoDto=new HistoricoDTO(historico);
+			return ResponseEntity.ok(historicoDto);
+		}
+			
 	
+	
+}
+
 	
 	
 	//hISTORICOS de un usuario determinada 
@@ -179,7 +179,7 @@ public class HistoricoController {
 	
 	//BORRAR UN HISTORICO DETERMINADO
 	@DeleteMapping("/historicoDelete/{id}")
-	public ResponseEntity<?> borrarUsuario(@PathVariable Integer id) {	
+	public ResponseEntity<?> borrarHistorico(@PathVariable Integer id) {	
 		Historico historico=historicoRepositorio.findById(id).orElse(null);
 		//notFound es el 404
 		if(historico==null)

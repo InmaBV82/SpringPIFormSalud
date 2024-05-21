@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ejemplos.DTO.UsuarioDTO;
+import com.ejemplos.Repositorios.HistoricoRepositorio;
+import com.ejemplos.Repositorios.PlatoRepositorio;
 import com.ejemplos.Repositorios.UsuarioRepositorio;
 import com.ejemplos.excepciones.ApiError;
 import com.ejemplos.excepciones.UsuarioNotFoundException;
@@ -30,6 +32,12 @@ public class UsuarioController {
 	
 	@Autowired 
 	private UsuarioRepositorio usuarioRepositorio;
+	
+	@Autowired 
+	private PlatoRepositorio platoRepositorio;
+	
+	@Autowired 
+	private HistoricoRepositorio historicoRepositorio;
 	
 //	@Autowired
 //    private PasswordEncoder passwordEncoder;
@@ -108,14 +116,17 @@ public class UsuarioController {
 	}
 	
 	//BORRAR UN USUARIO DETERMINADO
-	@DeleteMapping("/usuario/{id}")
+	@DeleteMapping("/usuarioDelete/{id}")
 	public ResponseEntity<?> borrarUsuario(@PathVariable Integer id) {	
 		Usuario result=usuarioRepositorio.findById(id).orElse(null);
 		//notFound es el 404
 		if(result==null)
 			throw new UsuarioNotFoundException(id);
 		else {
-				
+			//eliminamos sus platos
+			platoRepositorio.deleteByAutorId(id);
+			//eliminamos sus historicos
+			historicoRepositorio.deleteByAutorId(id);
 			usuarioRepositorio.deleteById(id);
 			return ResponseEntity.noContent().build();
 		}

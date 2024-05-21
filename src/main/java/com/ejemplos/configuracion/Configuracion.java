@@ -37,7 +37,8 @@ public class Configuracion {
 //	  @Bean
 //	  PasswordEncoder passwordEncoder(){
 //	      return new BCryptPasswordEncoder();
-//	  }//para crear el encriptado en el spring con el Bean
+//	  }
+	//para crear el encriptado en el spring con el Bean
 
 
 	

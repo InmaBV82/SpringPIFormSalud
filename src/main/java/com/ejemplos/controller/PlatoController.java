@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ejemplos.DTO.PlatoDTO;
 import com.ejemplos.DTO.PlatoAddDTO;
 import com.ejemplos.DTO.PlatoDTO;
 import com.ejemplos.DTO.ResenaDTO;
@@ -22,11 +23,12 @@ import com.ejemplos.Repositorios.CategoriaRepositorio;
 import com.ejemplos.Repositorios.PlatoRepositorio;
 import com.ejemplos.Repositorios.UsuarioRepositorio;
 import com.ejemplos.modelo.Categoria;
-import com.ejemplos.modelo.Historico;
+import com.ejemplos.modelo.Plato;
 import com.ejemplos.modelo.Plato;
 import com.ejemplos.modelo.Resena;
 import com.ejemplos.modelo.Usuario;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @RestController//indica q estamos implementando un servicio web
@@ -79,31 +81,30 @@ public class PlatoController {
 	
 
 	//Platos de una Categoria determinada MEJORADO
-		@GetMapping("/platosCategoria/{categoriaid}")
-		public ResponseEntity<?> platosDeCategoria(@PathVariable int categoriaid) {
-			List<Plato> platosCategoria = platoRepositorio.findPlatosDeCategoria(categoriaid);
-			
-			if (platosCategoria.isEmpty()) {
-			//devolvemos una respuesta como instancia de ResposeEntity
-				return ResponseEntity.notFound().build();
-				
-			} else {
-				
-				List<PlatoDTO> platosDTO = new ArrayList<>();
-			    for (Plato plato : platosCategoria) {
-			    	PlatoDTO platoDTO = new PlatoDTO(plato);
-			        platosDTO.add(platoDTO);
-			    }
-			    return ResponseEntity.ok(platosDTO);
-			}
-		}
+	@GetMapping("/platosCategoria/{categoriaid}")
+	public ResponseEntity<?> platosDeCategoria(@PathVariable int categoriaid) {
+		List<Plato> platosCategoria = platoRepositorio.findPlatosDeCategoria(categoriaid);
 		
-
+		if (platosCategoria.isEmpty()) {
+		//devolvemos una respuesta como instancia de ResposeEntity
+			return ResponseEntity.notFound().build();
+			
+		} else {
+			
+			List<PlatoDTO> platosDTO = new ArrayList<>();
+		    for (Plato plato : platosCategoria) {
+		    	PlatoDTO platoDTO = new PlatoDTO(plato);
+		        platosDTO.add(platoDTO);
+		    }
+		    return ResponseEntity.ok(platosDTO);
+		}
+	}
+	
 	//BUSCAR UN PLATOD POR ID Y CONVERTIRLO A DTO
-	@GetMapping("/platoDTO/{id}")
-	public ResponseEntity<?> obtenerUno(@PathVariable int id) {
+	@GetMapping("/platoDTO/{platoid}")
+	public ResponseEntity<?> obtenerUnDto(@PathVariable int platoid) {
 
-		Plato plato=platoRepositorio.findById(id).orElse(null);
+		Plato plato=platoRepositorio.findById(platoid).orElse(null);
 		//notFound es el 404
 		if(plato==null) {
 			return ResponseEntity.notFound().build();
@@ -111,6 +112,25 @@ public class PlatoController {
 		else {
 			
 			PlatoDTO platoDto=new PlatoDTO(plato);
+			return ResponseEntity.ok(platoDto);
+		}
+			
+	
+	}
+	
+
+	//BUSCAR UN PLATOD POR ID Y CONVERTIRLO A AddDTO
+	@GetMapping("/platoAddDTO/{platoid}")
+	public ResponseEntity<?> obtenerUnPlatoAddDto(@PathVariable int platoid) {
+
+		Plato plato=platoRepositorio.findById(platoid).orElse(null);
+		//notFound es el 404
+		if(plato==null) {
+			return ResponseEntity.notFound().build();
+		}
+		else {
+			
+			PlatoAddDTO platoDto=new PlatoAddDTO(plato);
 			return ResponseEntity.ok(platoDto);
 		}
 			
@@ -166,23 +186,44 @@ public class PlatoController {
 	}
 	
 	
-	//EDITAR UN PLATO
-	@PutMapping("/plato/{id}")
-	public ResponseEntity<?> editar(@RequestBody Plato editar, @PathVariable Integer id) {
+	//EDITAR UN PLATOAddDTO
+	@PutMapping("/editPlatoAddDTO/{idPlato}")
+	@Transactional
+	public ResponseEntity<?> update(@PathVariable int idPlato, @RequestBody PlatoAddDTO updatePlatoDto) {
 		
-		//si no existe me lanza la excepcion y acaba
-		if(!platoRepositorio.existsById(id)) 
+		Usuario usu = usuarioRepositorio.findById(updatePlatoDto.getAutorid()).orElse(null);
+		Categoria cat= categoriaRepositorio.findById(updatePlatoDto.getCategoriaid()).orElse(null);
+		Plato platoConvertido =platoRepositorio.findById(idPlato).orElse(null); 
+	   
+		if (usu == null) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no ha sido encontrado");
+	    }
+		
+		if(platoConvertido==null) {
 			return ResponseEntity.notFound().build();
-		
-		//si existe lo modifica
-		return ResponseEntity.ok(platoRepositorio.save(editar));
+		}
+		else {
+
+		 
+			platoConvertido.setNombre(updatePlatoDto.getNombre());
+		    platoConvertido.setDescripcion(updatePlatoDto.getDescripcion());
+		    platoConvertido.setIngredientes(updatePlatoDto.getIngredientes());
+		    platoConvertido.setTiempo(updatePlatoDto.getTiempo());
+		   // platoConvertido.setFoto(updatePlatoDto.getFoto());
+		    platoConvertido.setCategoria(cat);
+		    platoConvertido.setAutor(usu);
+
+		    platoRepositorio.save(platoConvertido);  
+
+		    return ResponseEntity.status(HttpStatus.CREATED).body(updatePlatoDto);
 			
+		}
 		
 	}
 	
 	//BORRAR UN PLATO	
-	@DeleteMapping("/plato/{id}")
-	public ResponseEntity<?> borrarUsuario(@PathVariable Integer id) {	
+	@DeleteMapping("/platoDelete/{id}")
+	public ResponseEntity<?> borrarPlato(@PathVariable Integer id) {	
 		Plato result=platoRepositorio.findById(id).orElse(null);
 		//notFound es el 404
 		if(result==null)

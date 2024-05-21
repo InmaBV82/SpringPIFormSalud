@@ -48,9 +48,11 @@ public class PlatoAddDTO {
 	@Setter
 	private String categoriaNombre;
 	
+	@Getter
+	@Setter
+	private int autorid;
 	
 	
-
 	public PlatoAddDTO(Plato plato) {
 		this.id=plato.getId();
 		this.nombre=plato.getNombre();
@@ -59,6 +61,7 @@ public class PlatoAddDTO {
 		this.tiempo=plato.getTiempo();
 		this.categoriaid=plato.getCategoria().getId();
 		this.categoriaNombre=plato.getCategoria().getNombre();
+		this.autorid=plato.getAutor().getId();
 
 	}
 	
