@@ -119,7 +119,7 @@ public class PlatoController {
 	}
 	
 
-	//BUSCAR UN PLATOD POR ID Y CONVERTIRLO A AddDTO
+	//BUSCAR UN PLATOD POR ID Y CONVERTIRLO A AddDTO(para que salga relleno el form por defecto con el plato a editar)
 	@GetMapping("/platoAddDTO/{platoid}")
 	public ResponseEntity<?> obtenerUnPlatoAddDto(@PathVariable int platoid) {
 
@@ -130,8 +130,8 @@ public class PlatoController {
 		}
 		else {
 			
-			PlatoAddDTO platoDto=new PlatoAddDTO(plato);
-			return ResponseEntity.ok(platoDto);
+			PlatoAddDTO platoAddDto=new PlatoAddDTO(plato);
+			return ResponseEntity.ok(platoAddDto);
 		}
 			
 	
@@ -144,7 +144,7 @@ public class PlatoController {
 		List<Plato> platosUsu = platoRepositorio.findPlatosUsuario(autorid);
 		
 		if (platosUsu.isEmpty()) {
-		//devolvemos una respuesta como instancia de ResposeEntity
+
 			return ResponseEntity.notFound().build();
 			
 		} else {

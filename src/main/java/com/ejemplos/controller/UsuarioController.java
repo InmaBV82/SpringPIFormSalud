@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ejemplos.DTO.UsuarioDTO;
 import com.ejemplos.Repositorios.HistoricoRepositorio;
 import com.ejemplos.Repositorios.PlatoRepositorio;
+import com.ejemplos.Repositorios.ResenaRepositorio;
 import com.ejemplos.Repositorios.UsuarioRepositorio;
 import com.ejemplos.excepciones.ApiError;
 import com.ejemplos.excepciones.UsuarioNotFoundException;
@@ -38,6 +39,9 @@ public class UsuarioController {
 	
 	@Autowired 
 	private HistoricoRepositorio historicoRepositorio;
+	
+	@Autowired 
+	private ResenaRepositorio resenaRepositorio;
 	
 //	@Autowired
 //    private PasswordEncoder passwordEncoder;
@@ -127,6 +131,8 @@ public class UsuarioController {
 			platoRepositorio.deleteByAutorId(id);
 			//eliminamos sus historicos
 			historicoRepositorio.deleteByAutorId(id);
+			//eliminamos sus resenas(se supone que sólo el admin)
+			resenaRepositorio.deleteByAutorId(id);
 			usuarioRepositorio.deleteById(id);
 			return ResponseEntity.noContent().build();
 		}
