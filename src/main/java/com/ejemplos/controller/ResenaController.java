@@ -20,7 +20,6 @@ import com.ejemplos.DTO.ResenaDTO;
 import com.ejemplos.Repositorios.PlatoRepositorio;
 import com.ejemplos.Repositorios.ResenaRepositorio;
 import com.ejemplos.Repositorios.UsuarioRepositorio;
-import com.ejemplos.excepciones.ResenaException;
 import com.ejemplos.modelo.Plato;
 import com.ejemplos.modelo.Resena;
 import com.ejemplos.modelo.Usuario;
@@ -46,7 +45,7 @@ public class ResenaController {
 
 
 	
-	@GetMapping("/resenas")
+	@GetMapping("/resenas")//(sólo para el admin)
 	public ResponseEntity<?> obtenerTodos() {
 		List<Resena> resenas = resenaRepositorio.findAll();
 		
@@ -78,6 +77,26 @@ public class ResenaController {
 		    return ResponseEntity.ok(resenasDTO);
 		}
 		
+	}
+		
+	//todas las reseñasAddDto para la vista del administrador
+	@GetMapping("/resenaAddDTO")
+	public ResponseEntity<?> obtenerTodasLasResenasDAddDTO() {
+	List<Resena> resenas = resenaRepositorio.findAll();
+		
+		if (resenas.isEmpty()) {
+		//devolvemos una respuesta como instancia de ResposeEntity
+			return ResponseEntity.notFound().build();
+		}else {
+			List<ResenaAddDTO> resenasAddDTO = new ArrayList<>();
+		    for (Resena resena : resenas) {
+		    	ResenaAddDTO resenaAddDTO = new ResenaAddDTO(resena);
+		    	resenasAddDTO.add(resenaAddDTO);
+		            
+		       }
+		    return ResponseEntity.ok(resenasAddDTO);
+		}
+	
 	}
 		
 		
@@ -204,24 +223,20 @@ public class ResenaController {
 		
 	}
 		
-	//BORRAR UNA RESENA	(sólo el admin)
+	//BORRAR UNA RESENA	(sólo para el admin en el front)
 	@DeleteMapping("/resenaDelete/{id}")
 	public ResponseEntity<?> borrarResena(@PathVariable Integer id) {	
+		
 		Resena result=resenaRepositorio.findById(id).orElse(null);
 
 		if(result==null)
-			return ResponseEntity.notFound().build();
-		else {
 			
-			if(result.getUsuario().getRol() == "admin") {
-				
-				resenaRepositorio.deleteById(id);
-				return ResponseEntity.noContent().build();
-			}
-			else {
-				
-				throw new ResenaException(id);
-			}
+			return ResponseEntity.notFound().build();
+		
+		else {
+		
+			resenaRepositorio.deleteById(id);
+			return ResponseEntity.noContent().build();
 				
 			
 		}
