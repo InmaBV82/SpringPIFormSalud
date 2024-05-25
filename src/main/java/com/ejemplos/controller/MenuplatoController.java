@@ -3,7 +3,8 @@ package com.ejemplos.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,7 @@ public class MenuplatoController {
 	@Autowired
 	private MenuplatoRepositorio menuplatoRepositorio;
 
+
 	
 	//Todos los MenuplatoDTO
 		@GetMapping("/menuPlatosDTO")
@@ -43,11 +45,18 @@ public class MenuplatoController {
 			    	menuplatosDTO.add(menuPlatoDTO);
 			            
 			       }
-			    return ResponseEntity.ok(menuplatosDTO);
+			 // Agrupar los MenuPlatoDTO por menuid() y de valor mostrar toda la info  
+			    Map<Integer, List<MenuPlatoDTO>> agruparPorMenuid = menuplatosDTO.stream()
+			            .collect(Collectors.groupingBy(MenuPlatoDTO::getMenuid));
+	
+		  
+			 
+			  return ResponseEntity.ok(agruparPorMenuid);
 			}
 			
 		}
-	
+		
+
 	
 
 

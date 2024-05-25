@@ -2,7 +2,6 @@ package com.ejemplos.DTO;
 
 
 import com.ejemplos.modelo.Menuplato;
-import com.ejemplos.modelo.MenuplatoPK;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
