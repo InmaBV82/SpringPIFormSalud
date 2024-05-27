@@ -79,28 +79,8 @@ public class ResenaController {
 		
 	}
 		
-	//todas las reseñasAddDto para la vista del administrador
-	@GetMapping("/resenaAddDTO")
-	public ResponseEntity<?> obtenerTodasLasResenasDAddDTO() {
-	List<Resena> resenas = resenaRepositorio.findAll();
 		
-		if (resenas.isEmpty()) {
-		//devolvemos una respuesta como instancia de ResposeEntity
-			return ResponseEntity.notFound().build();
-		}else {
-			List<ResenaAddDTO> resenasAddDTO = new ArrayList<>();
-		    for (Resena resena : resenas) {
-		    	ResenaAddDTO resenaAddDTO = new ResenaAddDTO(resena);
-		    	resenasAddDTO.add(resenaAddDTO);
-		            
-		       }
-		    return ResponseEntity.ok(resenasAddDTO);
-		}
-	
-	}
-		
-		
-	//BUSCAR UNA RESENA POR ID Y CONVERTIRLO A AddDTO(para la llamada que salga relleno el form por defecto con la resena a editar)
+	//BUSCAR UNA RESENA POR ID Y CONVERTIRLO A AddDTO(para la llamada put que salga relleno el form por defecto con la resena a editar)
 	@GetMapping("/resenaAddDTO/{id}")
 	public ResponseEntity<?> obtenerUnPlatoAddDto(@PathVariable int id) {
 

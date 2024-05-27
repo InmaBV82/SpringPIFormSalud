@@ -35,6 +35,10 @@ public class ResenaDTO {
 	@Getter
 	@Setter
 	private String autor;
+	
+	@Getter
+	@Setter
+	private String nombrePlato;
 
 
 
@@ -44,6 +48,7 @@ public class ResenaDTO {
 		this.fecha=resena.getFecha();
 		this.puntuacion=resena.getPuntuacion();
 		this.autor=resena.getUsuario().getNombre();
+		this.nombrePlato=resena.getPlato().getNombre();
 
 	}
 
