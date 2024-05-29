@@ -107,16 +107,29 @@ public class UsuarioController {
 	}
 	
 	//MODIFICAR UN USUARIO DETERMINADO
-	@PutMapping("/usuario/{id}")
-	public ResponseEntity<?> editar(@RequestBody Usuario editar, @PathVariable Integer id) {
+	@PutMapping("/editarUsuario/{id}")
+	public ResponseEntity<?> editar(@PathVariable Integer id, @RequestBody Usuario editar) {
 		
-		//si no existe me lanza la excepcion y acaba
-		if(!usuarioRepositorio.existsById(id)) 
-			throw new UsuarioNotFoundException(id);
-		
-		//si existe lo modifica
-		return ResponseEntity.ok(usuarioRepositorio.save(editar));
-			
+		 // Verifica si el usuario existe
+	    Usuario usuarioExistente = usuarioRepositorio.findById(id)
+	            .orElseThrow(() -> new UsuarioNotFoundException(id));
+
+	    // Actualiza solo los campos necesarios
+	    usuarioExistente.setNombre(editar.getNombre());
+	    usuarioExistente.setEmail(editar.getEmail());
+	    usuarioExistente.setPassword(editar.getPassword());
+	    if (id != 1) {
+	    	 usuarioExistente.setRol("usuario");
+		    }
+	    else {
+	    	 usuarioExistente.setRol("admin");
+	    }
+	   
+
+	    // Guardo el usuario actualizado
+	    Usuario usuarioActualizado = usuarioRepositorio.save(usuarioExistente);
+
+	    return ResponseEntity.ok(usuarioActualizado);
 		
 	}
 	
