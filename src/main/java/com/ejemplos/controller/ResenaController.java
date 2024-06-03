@@ -60,7 +60,7 @@ public class ResenaController {
 	}
 	
 	//Todos las resenasDTO
-		@GetMapping("/resenasDto")
+	@GetMapping("/resenasDto")
 	public ResponseEntity<?> obtenerTodosDTO() {
 		List<Resena> resenas = resenaRepositorio.findAll();
 		
@@ -97,6 +97,7 @@ public class ResenaController {
 			
 	
 	}	
+	
 		
 	//Resenas de un usuario determinada
 	@GetMapping("/resenasUsuario/{usuarioid}")
@@ -118,6 +119,7 @@ public class ResenaController {
 		}
 	}
 	
+	
 	//MOSTRAR LAS RESENAS DE UN PLATO
 	@GetMapping("/resenasPlato/{platoid}")
 	public ResponseEntity<?> obtenerTodos(@PathVariable int platoid) {
@@ -138,6 +140,26 @@ public class ResenaController {
 
 			return ResponseEntity.ok(resenasDTO);
 		}
+	}
+	
+	//filtro las resenas de una puntuación introducida (filtro)
+	@GetMapping("/filtroResenaPuntuacion/{puntuacion}")
+	public ResponseEntity<?> puntuacionResenas(@PathVariable int puntuacion) {
+		List<Resena> resenasPuntuacion = resenaRepositorio.findPuntuacionResenas(puntuacion);
+		
+		if (resenasPuntuacion.isEmpty()) {
+		//devolvemos una respuesta como instancia de ResposeEntity
+			return ResponseEntity.notFound().build();
+		}else {
+			List<ResenaDTO> resenasPuntuacionDTO = new ArrayList<>();
+		    for (Resena resena : resenasPuntuacion) {
+		    	ResenaDTO resenaDTO = new ResenaDTO(resena);
+		    	resenasPuntuacionDTO.add(resenaDTO);
+		            
+		       }
+		    return ResponseEntity.ok(resenasPuntuacionDTO);
+		}
+		
 	}
 	
 	
@@ -222,6 +244,8 @@ public class ResenaController {
 		}
 				
 	}
+	
+	
 
 
 

@@ -25,5 +25,8 @@ public interface ResenaRepositorio extends JpaRepository<Resena, Integer>{
 	@Query("DELETE FROM Resena r WHERE r.usuario.id = :id")
 	void deleteByAutorId( int id);
 	
+	@Query("SELECT r FROM Resena r WHERE r.puntuacion = :puntuacion")
+    List<Resena> findPuntuacionResenas(int puntuacion);
+	
 
 }
