@@ -174,6 +174,7 @@ public class PlatoController {
 		platoConvertido.setId(nuevo.getId());
 		platoConvertido.setNombre(nuevo.getNombre());
 		platoConvertido.setDescripcion(nuevo.getDescripcion());
+		platoConvertido.setFoto(nuevo.getFoto());
 		platoConvertido.setIngredientes(nuevo.getIngredientes());
 		platoConvertido.setTiempo(nuevo.getTiempo());
 		platoConvertido.setCategoria(cat);

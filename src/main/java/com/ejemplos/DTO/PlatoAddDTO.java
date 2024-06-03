@@ -27,10 +27,10 @@ public class PlatoAddDTO {
 	@Setter
 	private String descripcion;
 
-//
-//	@Getter
-//	@Setter
-//	private String foto;
+
+	@Getter
+	@Setter
+	private String foto;
 
 	@Getter
 	@Setter
@@ -57,6 +57,7 @@ public class PlatoAddDTO {
 		this.id=plato.getId();
 		this.nombre=plato.getNombre();
 		this.descripcion=plato.getDescripcion();
+		this.foto=plato.getFoto();
 		this.ingredientes=plato.getIngredientes();
 		this.tiempo=plato.getTiempo();
 		this.categoriaid=plato.getCategoria().getId();
