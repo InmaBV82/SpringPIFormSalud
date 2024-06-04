@@ -3,8 +3,6 @@ package com.ejemplos.modelo;
 import java.io.Serializable;
 import java.util.Date;
 
-import com.ejemplos.DTO.HistoricoDTO;
-
 import jakarta.persistence.*;
 
 
