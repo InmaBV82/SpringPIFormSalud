@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,8 +44,8 @@ public class UsuarioController {
 	@Autowired 
 	private ResenaRepositorio resenaRepositorio;
 	
-//	@Autowired
-//    private PasswordEncoder passwordEncoder;
+	@Autowired
+    private PasswordEncoder passwordEncoder;
 
 	
 	//LISTAR TODOS LOS USUARIOS
@@ -80,9 +81,17 @@ public class UsuarioController {
 	@PostMapping("/login")
 	public ResponseEntity<?> AUTENTICACION(@RequestBody UsuarioDTO usuLogin) {
 		
-		Usuario usuario=usuarioRepositorio.findByEmailAndPassword(usuLogin.getEmail(), usuLogin.getPassword());
+		Usuario usuario=usuarioRepositorio.findByEmail(usuLogin.getEmail());
+		
+		if(passwordEncoder.matches(usuLogin.getPassword(), usuario.getPassword())) {
+			
+			return ResponseEntity.ok(usuario);
+			
+		}
+		
+		return ResponseEntity.ok(null);
 
-		return ResponseEntity.ok(usuario);
+		
 			
 		
 	}
@@ -97,8 +106,8 @@ public class UsuarioController {
 		    }
 		 
 		// Encriptar la contraseña del usuario
-//		String encodedPassword = passwordEncoder.encode(nuevo.getPassword());
-//		nuevo.setPassword(encodedPassword);
+		String encodedPassword = passwordEncoder.encode(nuevo.getPassword());
+		nuevo.setPassword(encodedPassword);
 		usuarioRepositorio.save(nuevo);
 		return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
 			

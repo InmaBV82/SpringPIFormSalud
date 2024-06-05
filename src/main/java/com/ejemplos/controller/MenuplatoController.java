@@ -39,7 +39,7 @@ public class MenuplatoController {
 	@GetMapping("/menuPlatosDTO")
 	public ResponseEntity<?> obtenerTodosDTO() {
 		List<Menuplato> menuplatos = menuplatoRepositorio.findAll();
-		
+
 		if (menuplatos.isEmpty()) {
 		//devolvemos una respuesta como instancia de ResposeEntity
 			return ResponseEntity.notFound().build();
@@ -50,7 +50,8 @@ public class MenuplatoController {
 		    	menuplatosDTO.add(menuPlatoDTO);
 		            
 		       }
-		 // Agrupar los MenuPlatoDTO por menuid() y de valor mostrar toda la info  
+		    
+		 // Agrupar los MenuPlatoDTO por menuid() y de valor mostrar una lista con toda la info de la entidad menuPlato
 		    Map<Integer, List<MenuPlatoDTO>> agruparPorMenuid = menuplatosDTO.stream()
 		            .collect(Collectors.groupingBy(MenuPlatoDTO::getMenuid));
 
