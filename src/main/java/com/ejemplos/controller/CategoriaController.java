@@ -4,6 +4,7 @@ package com.ejemplos.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,18 +15,14 @@ import com.ejemplos.modelo.Categoria;
 
 import lombok.RequiredArgsConstructor;
 
-@RestController//indica q estamos implementando un servicio web
-@RequiredArgsConstructor //lombok crea el constructor
+@RestController
+@RequiredArgsConstructor
 public class CategoriaController {
 	
 	@Autowired 
 	private CategoriaRepositorio categoriaRepositorio;
 
 	
-	/**
-	* Obtenemos todos los categorias *
-	* @return 404 si no hay categorias, 200 y lista de categorias si hay uno o más
-	*/
 	
 	@GetMapping("/categorias")
 	public ResponseEntity<?> obtenerTodos() {
@@ -33,8 +30,7 @@ public class CategoriaController {
 		
 		if (categorias.isEmpty()) {
 
-		//devolvemos una respuesta como instancia de ResposeEntity
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista vacía");
 			
 		} else {
 

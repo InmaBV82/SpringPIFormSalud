@@ -51,12 +51,12 @@ public class PlatoController {
 		List<Plato> platos = platoRepositorio.findAll();
 		
 		if (platos.isEmpty()) {
-		//devolvemos una respuesta como instancia de ResposeEntity
-			return ResponseEntity.notFound().build();
+
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista vacía");
 			
 		} else {
 			
-			return ResponseEntity.ok(platos);//aqui me devuelve la lista
+			return ResponseEntity.ok(platos);
 		}
 	}
 	
@@ -65,8 +65,8 @@ public class PlatoController {
 		public ResponseEntity<?> obtenerTodosDTO() {
 			List<Plato> platos = platoRepositorio.findAll();
 			if (platos.isEmpty()) {
-//				//devolvemos una respuesta como instancia de ResposeEntity
-					return ResponseEntity.notFound().build();
+
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista vacía");
 			}else {
 				List<PlatoDTO> platosDTO = new ArrayList<>();
 			    for (Plato plato : platos) {
@@ -86,8 +86,7 @@ public class PlatoController {
 		List<Plato> platosCategoria = platoRepositorio.findPlatosDeCategoria(categoriaid);
 		
 		if (platosCategoria.isEmpty()) {
-		//devolvemos una respuesta como instancia de ResposeEntity
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista vacía");
 			
 		} else {
 			
@@ -105,9 +104,9 @@ public class PlatoController {
 	public ResponseEntity<?> obtenerUnDto(@PathVariable int platoid) {
 
 		Plato plato=platoRepositorio.findById(platoid).orElse(null);
-		//notFound es el 404
+
 		if(plato==null) {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Plato no encontrado");
 		}
 		else {
 			
@@ -124,9 +123,9 @@ public class PlatoController {
 	public ResponseEntity<?> obtenerUnPlatoAddDto(@PathVariable int platoid) {
 
 		Plato plato=platoRepositorio.findById(platoid).orElse(null);
-		//notFound es el 404
+		
 		if(plato==null) {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Plato no encontrado");
 		}
 		else {
 			
@@ -145,7 +144,7 @@ public class PlatoController {
 		
 		if (platosUsu.isEmpty()) {
 
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista vacía");
 			
 		} else {
 			
@@ -210,7 +209,7 @@ public class PlatoController {
 		    platoConvertido.setDescripcion(updatePlatoDto.getDescripcion());
 		    platoConvertido.setIngredientes(updatePlatoDto.getIngredientes());
 		    platoConvertido.setTiempo(updatePlatoDto.getTiempo());
-		   // platoConvertido.setFoto(updatePlatoDto.getFoto());
+		    platoConvertido.setFoto(updatePlatoDto.getFoto());
 		    platoConvertido.setCategoria(cat);
 		    platoConvertido.setAutor(usu);
 
@@ -225,8 +224,9 @@ public class PlatoController {
 	//BORRAR UN PLATO	
 	@DeleteMapping("/platoDelete/{id}")
 	public ResponseEntity<?> borrarPlato(@PathVariable Integer id) {	
+		
 		Plato result=platoRepositorio.findById(id).orElse(null);
-		//notFound es el 404
+	
 		if(result==null)
 			return ResponseEntity.notFound().build();
 		else {

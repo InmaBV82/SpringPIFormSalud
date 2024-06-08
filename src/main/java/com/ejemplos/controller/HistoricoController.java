@@ -50,8 +50,7 @@ public class HistoricoController {
 		List<Historico> historicos = historicoRepositorio.findAll();
 		
 		if (historicos.isEmpty()) {
-		//devolvemos una respuesta como instancia de ResposeEntity
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista vacía");
 			
 		} else {
 			
@@ -65,8 +64,7 @@ public class HistoricoController {
 		List<Historico> historicos = historicoRepositorio.findAll();
 		
 		if (historicos.isEmpty()) {
-		//devolvemos una respuesta como instancia de ResposeEntity
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista vacía");
 		}else {
 			List<HistoricoDTO> historicosDTO = new ArrayList<>();
 		    for (Historico historico : historicos) {
@@ -83,9 +81,9 @@ public class HistoricoController {
 	public ResponseEntity<?> obtenerUno(@PathVariable int id) {
 
 		Historico historico=historicoRepositorio.findById(id).orElse(null);
-		//notFound es el 404
+	
 		if(historico==null)
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Historico no encontrado");
 		else {
 			
 			HistoricoDTO historicoDto=new HistoricoDTO(historico);
@@ -104,8 +102,7 @@ public class HistoricoController {
 		List<Historico> historicosUsu = historicoRepositorio.findHistoricosUsuario(usuarioid);
 		
 		if (historicosUsu.isEmpty()) {
-		//devolvemos una respuesta como instancia de ResposeEntity
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista vacía");
 			
 		} else {
 			
@@ -181,7 +178,7 @@ public class HistoricoController {
 	@DeleteMapping("/historicoDelete/{id}")
 	public ResponseEntity<?> borrarHistorico(@PathVariable Integer id) {	
 		Historico historico=historicoRepositorio.findById(id).orElse(null);
-		//notFound es el 404
+	
 		if(historico==null)
 			return ResponseEntity.notFound().build();
 		else {

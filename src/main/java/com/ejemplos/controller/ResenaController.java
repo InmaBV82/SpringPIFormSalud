@@ -50,12 +50,11 @@ public class ResenaController {
 		List<Resena> resenas = resenaRepositorio.findAll();
 		
 		if (resenas.isEmpty()) {
-		//devolvemos una respuesta como instancia de ResposeEntity
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista vacía");
 			
 		} else {
 			
-			return ResponseEntity.ok(resenas);//aqui me devuelve la lista
+			return ResponseEntity.ok(resenas);
 		}
 	}
 	
@@ -65,8 +64,7 @@ public class ResenaController {
 		List<Resena> resenas = resenaRepositorio.findAll();
 		
 		if (resenas.isEmpty()) {
-		//devolvemos una respuesta como instancia de ResposeEntity
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista vacía");
 		}else {
 			List<ResenaDTO> resenasDTO = new ArrayList<>();
 		    for (Resena resena : resenas) {
@@ -85,9 +83,9 @@ public class ResenaController {
 	public ResponseEntity<?> obtenerUnPlatoAddDto(@PathVariable int id) {
 
 		Resena resena=resenaRepositorio.findById(id).orElse(null);
-		//notFound es el 404
+		
 		if(resena==null) {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resena no encontrada");
 		}
 		else {
 			
@@ -105,8 +103,7 @@ public class ResenaController {
 		List<Resena> resenasUsu = resenaRepositorio.findResenasUsuario(usuarioid);
 		
 		if (resenasUsu.isEmpty()) {
-		//devolvemos una respuesta como instancia de ResposeEntity
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista vacía");
 			
 		} else {
 			
@@ -127,8 +124,7 @@ public class ResenaController {
 		
 		if (resenasPlato.isEmpty()) {
 
-		//devolvemos una respuesta como instancia de ResposeEntity
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista vacía");
 			
 		} else {
 	
@@ -148,8 +144,7 @@ public class ResenaController {
 		List<Resena> resenasPuntuacion = resenaRepositorio.findPuntuacionResenas(puntuacion);
 		
 		if (resenasPuntuacion.isEmpty()) {
-		//devolvemos una respuesta como instancia de ResposeEntity
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista vacía");
 		}else {
 			List<ResenaDTO> resenasPuntuacionDTO = new ArrayList<>();
 		    for (Resena resena : resenasPuntuacion) {

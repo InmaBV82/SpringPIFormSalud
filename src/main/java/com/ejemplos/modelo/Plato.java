@@ -27,6 +27,8 @@ public class Plato implements Serializable {
 	private boolean esreceta;
 
 	private String foto;
+	
+	//private byte[] foto;
 
 	private String ingredientes;
 

@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,8 +42,7 @@ public class MenuplatoController {
 		List<Menuplato> menuplatos = menuplatoRepositorio.findAll();
 
 		if (menuplatos.isEmpty()) {
-		//devolvemos una respuesta como instancia de ResposeEntity
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista vacía");
 		}else {
 			List<MenuPlatoDTO> menuplatosDTO = new ArrayList<>();
 		    for (Menuplato menuplato : menuplatos) {
@@ -68,8 +68,7 @@ public class MenuplatoController {
 		List<Menuplato> menusplatos = menuplatoRepositorio.filtroMenuplatoPorTipo(tipo);
 		
 		if (menusplatos.isEmpty()) {
-		//devolvemos una respuesta como instancia de ResposeEntity
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista vacía");
 		}else {
 			List<MenuPlatoDTO> menusDto=new ArrayList<>();
 			for (Menuplato menuplato: menusplatos) {

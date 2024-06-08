@@ -3,6 +3,7 @@ package com.ejemplos.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ejemplos.DTO.UsuarioDTO;
+import com.ejemplos.Repositorios.EmailService;
 import com.ejemplos.Repositorios.HistoricoRepositorio;
 import com.ejemplos.Repositorios.PlatoRepositorio;
 import com.ejemplos.Repositorios.ResenaRepositorio;
@@ -46,6 +48,9 @@ public class UsuarioController {
 	
 	@Autowired
     private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private EmailService emailService;
 
 	
 	//LISTAR TODOS LOS USUARIOS
@@ -55,12 +60,11 @@ public class UsuarioController {
 		
 		if (usuarios.isEmpty()) {
 
-		//devolvemos una respuesta como instancia de ResposeEntity
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista vacía");
 			
 		} else {
 
-			return ResponseEntity.ok(usuarios);//aqui me devuelve la lista
+			return ResponseEntity.ok(usuarios);
 		}
 	}
 	
@@ -69,7 +73,7 @@ public class UsuarioController {
 	public ResponseEntity<?> obtenerUno(@PathVariable int id) {
 
 		Usuario result=usuarioRepositorio.findById(id).orElse(null);
-		//notFound es el 404
+		
 		if(result==null)
 			throw new UsuarioNotFoundException(id);
 		else
@@ -79,7 +83,7 @@ public class UsuarioController {
 }
 	//LOGIN
 	@PostMapping("/login")
-	public ResponseEntity<?> AUTENTICACION(@RequestBody UsuarioDTO usuLogin) {
+	public ResponseEntity<?> autenticacion(@RequestBody UsuarioDTO usuLogin) {
 		
 		Usuario usuario=usuarioRepositorio.findByEmail(usuLogin.getEmail());
 		
@@ -90,8 +94,6 @@ public class UsuarioController {
 		}
 		
 		return ResponseEntity.ok(null);
-
-		
 			
 		
 	}
@@ -105,7 +107,7 @@ public class UsuarioController {
 			 nuevo.setRol("usuario");  
 		    }
 		 
-		// Encriptar la contraseña del usuario
+		// Encriptar la contraseña del usuario nuevo
 		String encodedPassword = passwordEncoder.encode(nuevo.getPassword());
 		nuevo.setPassword(encodedPassword);
 		usuarioRepositorio.save(nuevo);
@@ -118,7 +120,7 @@ public class UsuarioController {
 	@PutMapping("/editarUsuario/{id}")
 	public ResponseEntity<?> editar(@PathVariable Integer id, @RequestBody Usuario editar) {
 		
-		 // Verifica si el usuario existe
+		 // Verifica si el usuario existe sino salta excepcion
 	    Usuario usuarioExistente = usuarioRepositorio.findById(id)
 	            .orElseThrow(() -> new UsuarioNotFoundException(id));
 
@@ -126,6 +128,9 @@ public class UsuarioController {
 	    usuarioExistente.setNombre(editar.getNombre());
 	    usuarioExistente.setEmail(editar.getEmail());
 	    usuarioExistente.setPassword(editar.getPassword());
+	    String encodedPassword = passwordEncoder.encode(usuarioExistente.getPassword());
+	    usuarioExistente.setPassword(encodedPassword);
+	    
 	    if (id != 1) {
 	    	 usuarioExistente.setRol("usuario");
 		    }
@@ -153,13 +158,42 @@ public class UsuarioController {
 			platoRepositorio.deleteByAutorId(id);
 			//eliminamos sus historicos
 			historicoRepositorio.deleteByAutorId(id);
-			//eliminamos sus resenas(se supone que sólo el admin)
+			//eliminamos sus resenas
 			resenaRepositorio.deleteByAutorId(id);
+			
 			usuarioRepositorio.deleteById(id);
 			return ResponseEntity.noContent().build();
 		}
 				
 	}
+	
+	
+
+	//RECUPERAR CONTRASEÑA
+	@PostMapping("/recuperarPassword/{nombre}/{email}")
+	public ResponseEntity<?> recuperarPassword(@PathVariable String nombre, @PathVariable String email) {
+		
+		Usuario usu=usuarioRepositorio.findByNombreAndEmail(nombre, email);
+	
+		if(usu != null) {
+			 String nuevaPassword=UUID.randomUUID().toString().substring(0, 15);
+			 String encodedPassword = passwordEncoder.encode(nuevaPassword);
+			 
+			 usu.setPassword(encodedPassword);
+			 usuarioRepositorio.save(usu);
+			 emailService.enviarEmail(email, "Recuperación de la Contraseña", "La nueva contraseña es: "+
+			 nuevaPassword);
+			 
+			 return ResponseEntity.ok().build();
+			 
+		}
+		else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+		}
+			
+		
+	}
+	
 	
 //cuando se produzca un error de este tipo ejecuta este metodo y enseña un objeto de la clase ApiError que nos hemos creado con nuestros propios atributos de error
 	@ExceptionHandler(UsuarioNotFoundException.class)
