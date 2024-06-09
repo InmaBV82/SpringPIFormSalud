@@ -61,23 +61,23 @@ public class PlatoController {
 	}
 	
 	//Todos los platosDTO
-		@GetMapping("/platosDto")
-		public ResponseEntity<?> obtenerTodosDTO() {
-			List<Plato> platos = platoRepositorio.findAll();
-			if (platos.isEmpty()) {
+	@GetMapping("/platosDto")
+	public ResponseEntity<?> obtenerTodosDTO() {
+		List<Plato> platos = platoRepositorio.findAll();
+		if (platos.isEmpty()) {
 
-				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista vacía");
-			}else {
-				List<PlatoDTO> platosDTO = new ArrayList<>();
-			    for (Plato plato : platos) {
-			    	PlatoDTO platoDTO = new PlatoDTO(plato);
-			    	 platosDTO.add(platoDTO);
-			            
-			       }
-			    return ResponseEntity.ok(platosDTO);
-			}
-			
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista vacía");
+		}else {
+			List<PlatoDTO> platosDTO = new ArrayList<>();
+		    for (Plato plato : platos) {
+		    	PlatoDTO platoDTO = new PlatoDTO(plato);
+		    	 platosDTO.add(platoDTO);
+		            
+		       }
+		    return ResponseEntity.ok(platosDTO);
 		}
+		
+	}
 	
 
 	//Platos de una Categoria determinada MEJORADO
@@ -173,7 +173,14 @@ public class PlatoController {
 		platoConvertido.setId(nuevo.getId());
 		platoConvertido.setNombre(nuevo.getNombre());
 		platoConvertido.setDescripcion(nuevo.getDescripcion());
-		platoConvertido.setFoto(nuevo.getFoto());
+		
+		  // Asignar una foto por defecto si es nula o vacía
+	    if (nuevo.getFoto() != null && !nuevo.getFoto().isEmpty()) {
+	        platoConvertido.setFoto(nuevo.getFoto());
+	    } else {
+	        platoConvertido.setFoto("logo.png");
+	    }
+		
 		platoConvertido.setIngredientes(nuevo.getIngredientes());
 		platoConvertido.setTiempo(nuevo.getTiempo());
 		platoConvertido.setCategoria(cat);
