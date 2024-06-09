@@ -87,17 +87,20 @@ public class UsuarioController {
 		
 		Usuario usuario=usuarioRepositorio.findByEmail(usuLogin.getEmail());
 		
-		if(passwordEncoder.matches(usuLogin.getPassword(), usuario.getPassword())) {
-			
-			return ResponseEntity.ok(usuario);
-			
-		}
-		
-		return ResponseEntity.ok(null);
-			
-		
-	}
+		if (usuario == null) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no registrado");
+	    }
+
+	    if (passwordEncoder.matches(usuLogin.getPassword(), usuario.getPassword())) {
+	        return ResponseEntity.ok(usuario);
+	    } else {
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Contraseña incorrecta");
+	    
+	    }
+	    
+	   }
 	
+	    
 	
 	//CREAR UN USUARIO NUEVO
 	@PostMapping("/usuarioNuevo")
@@ -115,6 +118,7 @@ public class UsuarioController {
 			
 		
 	}
+	
 	
 	//MODIFICAR UN USUARIO DETERMINADO
 	@PutMapping("/editarUsuario/{id}")
