@@ -180,13 +180,13 @@ public class UsuarioController {
 		Usuario usu=usuarioRepositorio.findByNombreAndEmail(nombre, email);
 	
 		if(usu != null) {
+		
 			 String nuevaPassword=UUID.randomUUID().toString().substring(0, 15);
 			 String encodedPassword = passwordEncoder.encode(nuevaPassword);
 			 
 			 usu.setPassword(encodedPassword);
 			 usuarioRepositorio.save(usu);
-			 emailService.enviarEmail(email, "Recuperación de la Contraseña", "La nueva contraseña es: "+
-			 nuevaPassword);
+			 emailService.enviarEmail(email, "Recuperación de la Contraseña", "La nueva contraseña es: "+ nuevaPassword);
 			 
 			 return ResponseEntity.ok().build();
 			 

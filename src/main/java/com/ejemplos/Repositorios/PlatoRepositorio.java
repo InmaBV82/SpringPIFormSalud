@@ -22,6 +22,10 @@ public interface PlatoRepositorio extends JpaRepository<Plato, Integer> {
 	@Transactional
 	@Query("DELETE FROM Plato p WHERE p.autor.id = :id")
 	void deleteByAutorId( int id);
+	
+	//FILTRO
+	@Query("SELECT p FROM Plato p WHERE p.nombre LIKE %:nombre%")
+	List<Plato> filtroNombrePlato(@Param("nombre") String nombre);
 
 
 }

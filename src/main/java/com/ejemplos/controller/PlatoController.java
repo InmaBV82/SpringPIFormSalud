@@ -3,6 +3,8 @@ package com.ejemplos.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ejemplos.DTO.PlatoDTO;
+import com.ejemplos.DTO.MenuPlatoDTO;
 import com.ejemplos.DTO.PlatoAddDTO;
 import com.ejemplos.DTO.PlatoDTO;
 import com.ejemplos.DTO.ResenaDTO;
@@ -23,6 +26,7 @@ import com.ejemplos.Repositorios.CategoriaRepositorio;
 import com.ejemplos.Repositorios.PlatoRepositorio;
 import com.ejemplos.Repositorios.UsuarioRepositorio;
 import com.ejemplos.modelo.Categoria;
+import com.ejemplos.modelo.Menuplato;
 import com.ejemplos.modelo.Plato;
 import com.ejemplos.modelo.Plato;
 import com.ejemplos.modelo.Resena;
@@ -156,6 +160,29 @@ public class PlatoController {
 		    return ResponseEntity.ok(platosDTO);
 		}
 	}
+	
+	//FILTRO POR NOMBRE PLATO
+	@GetMapping("/filtroNombrePlato/{nombre}")
+	public ResponseEntity<?> filtroNombreplatos(@PathVariable String nombre) {
+		
+		List<Plato> platos = platoRepositorio.filtroNombrePlato(nombre);
+		
+		if (platos.isEmpty()) {
+
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista vacía");
+			
+		} else {
+			
+			List<PlatoDTO> platosFiltradosDTO = new ArrayList<>();
+		    for (Plato plato : platos) {
+		    	PlatoDTO platoDTO = new PlatoDTO(plato);
+		    	platosFiltradosDTO.add(platoDTO);
+		    }
+		    return ResponseEntity.ok(platosFiltradosDTO);
+		}
+	}
+	
+	
 	
 	
 	// ADD PLATO A UN USUARIO LOGUEADO
