@@ -243,7 +243,12 @@ public class PlatoController {
 		    platoConvertido.setDescripcion(updatePlatoDto.getDescripcion());
 		    platoConvertido.setIngredientes(updatePlatoDto.getIngredientes());
 		    platoConvertido.setTiempo(updatePlatoDto.getTiempo());
-		    platoConvertido.setFoto(updatePlatoDto.getFoto());
+		    // Asignar una foto por defecto si es nula o vacía
+		    if (updatePlatoDto.getFoto() != null && !updatePlatoDto.getFoto().isEmpty()) {
+		        platoConvertido.setFoto(updatePlatoDto.getFoto());
+		    } else {
+		        platoConvertido.setFoto("logo.png");
+		    }
 		    platoConvertido.setCategoria(cat);
 		    platoConvertido.setAutor(usu);
 

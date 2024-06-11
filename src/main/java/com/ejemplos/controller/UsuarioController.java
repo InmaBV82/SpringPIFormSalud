@@ -78,9 +78,10 @@ public class UsuarioController {
 			throw new UsuarioNotFoundException(id);
 		else
 			return ResponseEntity.ok(result);
+
+	}
 	
 	
-}
 	//LOGIN
 	@PostMapping("/login")
 	public ResponseEntity<?> autenticacion(@RequestBody UsuarioDTO usuLogin) {
