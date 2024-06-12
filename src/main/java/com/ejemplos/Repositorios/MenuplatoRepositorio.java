@@ -15,6 +15,7 @@ public interface MenuplatoRepositorio extends JpaRepository<Menuplato, Menuplato
 	@Query("SELECT m FROM Menuplato m WHERE m.menu.tipo.nombre = :tipo")
     List<Menuplato> filtroMenuplatoPorTipo(String tipo);
 	
+
 	
 
 

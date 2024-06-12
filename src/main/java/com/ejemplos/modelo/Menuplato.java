@@ -1,6 +1,9 @@
 package com.ejemplos.modelo;
 
 import java.io.Serializable;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 
@@ -19,12 +22,14 @@ public class Menuplato implements Serializable {
 
 	//bi-directional many-to-one association to Menu
 	@ManyToOne
-	@JoinColumn(name="idmenu")
+	@JoinColumn(name="idmenu", insertable = false, updatable = false)
+	@JsonIgnore // Ignorar durante la serialización al crear el menuplato
 	private Menu menu;
 
 	//bi-directional many-to-one association to Plato
 	@ManyToOne
-	@JoinColumn(name="platoid")
+	@JoinColumn(name="platoid", insertable = false, updatable = false)
+	@JsonIgnore // Ignorar durante la serialización al crear el menuplato
 	private Plato plato;
 
 	public Menuplato() {

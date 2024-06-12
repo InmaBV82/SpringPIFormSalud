@@ -2,6 +2,7 @@ package com.ejemplos.DTO;
 
 
 import com.ejemplos.modelo.Menuplato;
+import com.ejemplos.modelo.MenuplatoPK;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,10 +10,10 @@ import lombok.Setter;
 
 @AllArgsConstructor
 public class MenuPlatoDTO {
-//	
-//	@Getter
-//	@Setter
-//	private MenuplatoPK id;
+	
+	@Getter
+	@Setter
+	private MenuplatoPK id;
 
 	
 	@Getter
@@ -41,7 +42,7 @@ public class MenuPlatoDTO {
 
 
 	public MenuPlatoDTO(Menuplato menuPlato) {
-//		this.id=menuPlato.getId();
+		this.id=menuPlato.getId();
 		this.momentodia=menuPlato.getId().getMomentodia();
 		this.platoid=menuPlato.getPlato().getId();
 		this.nombrePlato=menuPlato.getPlato().getNombre();

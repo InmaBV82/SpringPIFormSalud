@@ -22,6 +22,11 @@ public class MenuplatoPK implements Serializable {
 
 	public MenuplatoPK() {
 	}
+    public MenuplatoPK(Integer platoid, Integer idmenu, String momentodia) {
+        this.platoid = platoid;
+        this.idmenu = idmenu;
+        this.momentodia = momentodia;
+    }
 	public int getPlatoid() {
 		return this.platoid;
 	}
