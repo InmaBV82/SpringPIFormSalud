@@ -45,20 +45,7 @@ public class ResenaController {
 
 
 	
-	@GetMapping("/resenas")//(sólo para el admin)
-	public ResponseEntity<?> obtenerTodos() {
-		List<Resena> resenas = resenaRepositorio.findAll();
-		
-		if (resenas.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Lista vacía");
-			
-		} else {
-			
-			return ResponseEntity.ok(resenas);
-		}
-	}
-	
-	//Todos las resenasDTO
+	//Todos las resenasDTO (vista admin)
 	@GetMapping("/resenasDto")
 	public ResponseEntity<?> obtenerTodosDTO() {
 		List<Resena> resenas = resenaRepositorio.findAll();
@@ -185,7 +172,7 @@ public class ResenaController {
 		    
 	}
 	
-	//EDITAR UN PLATOAddDTO
+	//EDITAR UNA RESENAAddDTO
 	@PutMapping("/editResenaAddDto/{idResena}")
 	@Transactional
 	public ResponseEntity<?> update(@PathVariable int idResena, @RequestBody ResenaAddDTO updateResenaDto) {

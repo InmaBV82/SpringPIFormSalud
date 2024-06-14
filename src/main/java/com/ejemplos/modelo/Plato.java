@@ -27,20 +27,11 @@ public class Plato implements Serializable {
 	private boolean esreceta;
 
 	private String foto;
-	
-	//private byte[] foto;
 
 	private String ingredientes;
 
 	private int tiempo;
 
-	//bi-directional many-to-one association to Historico
-//	@OneToMany(mappedBy="plato")
-//	private List<Historico> historicos;
-
-	//bi-directional many-to-one association to Menuplato
-//	@OneToMany(mappedBy="plato")
-//	private List<Menuplato> menuplatos;
 
 	//bi-directional many-to-one association to Categoria
 	@ManyToOne
@@ -53,7 +44,6 @@ public class Plato implements Serializable {
 	private Usuario autor;
 
 //	bi-directional many-to-one association to Reseña
-	//@JsonIgnore
 	@OneToMany(mappedBy="plato", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Resena> resenas;
 
@@ -116,50 +106,6 @@ public class Plato implements Serializable {
 	public void setTiempo(int tiempo) {
 		this.tiempo = tiempo;
 	}
-
-//	public List<Historico> getHistoricos() {
-//		return this.historicos;
-//	}
-//
-//	public void setHistoricos(List<Historico> historicos) {
-//		this.historicos = historicos;
-//	}
-//
-//	public Historico addHistorico(Historico historico) {
-//		getHistoricos().add(historico);
-//		historico.setPlato(this);
-//
-//		return historico;
-//	}
-//
-//	public Historico removeHistorico(Historico historico) {
-//		getHistoricos().remove(historico);
-//		historico.setPlato(null);
-//
-//		return historico;
-//	}
-//
-//	public List<Menuplato> getMenuplatos() {
-//		return this.menuplatos;
-//	}
-//
-//	public void setMenuplatos(List<Menuplato> menuplatos) {
-//		this.menuplatos = menuplatos;
-//	}
-//
-//	public Menuplato addMenuplato(Menuplato menuplato) {
-//		getMenuplatos().add(menuplato);
-//		menuplato.setPlato(this);
-//
-//		return menuplato;
-//	}
-//
-//	public Menuplato removeMenuplato(Menuplato menuplato) {
-//		getMenuplatos().remove(menuplato);
-//		menuplato.setPlato(null);
-//
-//		return menuplato;
-//	}
 
 	public Categoria getCategoria() {
 		return this.categoria;

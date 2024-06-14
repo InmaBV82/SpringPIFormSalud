@@ -20,12 +20,14 @@ public class Configuracion {
         return model;
     }
     
+    //para que en el front se vean los resultados de las llamadas
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests().requestMatchers("/**").permitAll().and().csrf().disable();
         return http.build();
     }
     
+    //configurar llamadas desde el front y que no las bloquee
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
@@ -39,6 +41,7 @@ public class Configuracion {
         };
     }
     
+    //encriptar contraseñas
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

@@ -68,6 +68,7 @@ public class UsuarioController {
 		}
 	}
 	
+	
 	//MOSTRAR UN USUARIO SEGUN SU ID
 	@GetMapping("/usuario/{id}")
 	public ResponseEntity<?> obtenerUno(@PathVariable int id) {
@@ -91,7 +92,7 @@ public class UsuarioController {
 		if (usuario == null) {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no registrado");
 	    }
-
+//	compara dentro de la encriptacion si las contraseñas coinciden
 	    if (passwordEncoder.matches(usuLogin.getPassword(), usuario.getPassword())) {
 	        return ResponseEntity.ok(usuario);
 	    } else {
@@ -133,6 +134,7 @@ public class UsuarioController {
 	    usuarioExistente.setNombre(editar.getNombre());
 	    usuarioExistente.setEmail(editar.getEmail());
 	    usuarioExistente.setPassword(editar.getPassword());
+	    
 	    String encodedPassword = passwordEncoder.encode(usuarioExistente.getPassword());
 	    usuarioExistente.setPassword(encodedPassword);
 	    
@@ -200,7 +202,7 @@ public class UsuarioController {
 	}
 	
 	
-//cuando se produzca un error de este tipo ejecuta este metodo y enseña un objeto de la clase ApiError que nos hemos creado con nuestros propios atributos de error
+
 	@ExceptionHandler(UsuarioNotFoundException.class)
 	public ResponseEntity<ApiError> handleEmpleadoNoEncontrado(UsuarioNotFoundException ex){
 		ApiError apiError=new ApiError();

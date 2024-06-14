@@ -103,7 +103,7 @@ public class PlatoController {
 		}
 	}
 	
-	//BUSCAR UN PLATOD POR ID Y CONVERTIRLO A DTO
+	//BUSCAR UN PLATO POR ID Y CONVERTIRLO A DTO
 	@GetMapping("/platoDTO/{platoid}")
 	public ResponseEntity<?> obtenerUnDto(@PathVariable int platoid) {
 

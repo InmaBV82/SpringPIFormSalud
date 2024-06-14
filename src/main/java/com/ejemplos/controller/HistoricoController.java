@@ -54,7 +54,7 @@ public class HistoricoController {
 			
 		} else {
 			
-			return ResponseEntity.ok(historicos);//aqui me devuelve la lista
+			return ResponseEntity.ok(historicos);
 		}
 	}
 	
@@ -76,6 +76,7 @@ public class HistoricoController {
 		}
 		
 	}
+	
 	//MOSTRAR UN HISTORICODTO SEGUN SU ID
 	@GetMapping("/historicoDTO/{id}")
 	public ResponseEntity<?> obtenerUno(@PathVariable int id) {
@@ -91,8 +92,7 @@ public class HistoricoController {
 		}
 			
 	
-	
-}
+	}
 
 	
 	

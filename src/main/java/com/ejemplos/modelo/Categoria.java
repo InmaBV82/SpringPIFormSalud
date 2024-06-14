@@ -26,7 +26,6 @@ public class Categoria implements Serializable {
 	//bi-directional many-to-one association to Plato
 	@JsonIgnore
 	@OneToMany(mappedBy="categoria")
-//	@JsonIgnoreProperties({"platos"})
 	private List<Plato> platos;
 
 	public Categoria() {

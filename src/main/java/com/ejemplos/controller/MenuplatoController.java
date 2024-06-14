@@ -66,7 +66,7 @@ public class MenuplatoController {
 		            
 		       }
 		    
-		 // Agrupar los MenuPlatoDTO por menuid() y de valor mostrar una lista con toda la info de la entidad menuPlato
+// Agrupar los MenuPlatoDTO por menuid() y de valor mostrar una lista con toda la info de la entidad menuPlato
 		    Map<Integer, List<MenuPlatoDTO>> agruparPorMenuid = menuplatosDTO.stream()
 		            .collect(Collectors.groupingBy(MenuPlatoDTO::getMenuid));
 
@@ -106,10 +106,6 @@ public class MenuplatoController {
 	//CREAR UN MENUPLATO NUEVO (tiene que existir el menu y el plato anteriormente)
 	@PostMapping("/menuPlatoNuevo")
 	public ResponseEntity<?> crear(@RequestBody Menuplato nuevo) {
-		
-	   if (nuevo.getId() == null) {
-	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("El ID del MenuPlato no puede estar vacío");
-	    }
 		
 	    Integer idmenu = nuevo.getId().getIdmenu();
         Integer platoid = nuevo.getId().getPlatoid();

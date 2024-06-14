@@ -11,13 +11,13 @@ public class ApiRestApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ApiRestApplication.class, args);
-	
+//	
 //		ApplicationContext context = SpringApplication.run(ApiRestApplication.class, args);
 //		
-////		// Obtén el PasswordEncoder del contexto de Spring
+//		// Obtén el PasswordEncoder del contexto de Spring
 //		PasswordEncoder passwordEncoder = context.getBean (PasswordEncoder.class);
-////		// Encripta la contraseña
-//		String encodedPassword = passwordEncoder.encode("rober123");
+//		// Encripta la contraseña
+//		String encodedPassword = passwordEncoder.encode("juan123");
 ////		// Muestra la contraseña encriptada 
 //		System.out.println("Contraseña encriptada: "+encodedPassword);
 		

@@ -32,20 +32,6 @@ public class Usuario implements Serializable {
 
 	private String rol;
 
-//	//bi-directional many-to-one association to Historico
-//	@OneToMany(mappedBy="usuario")
-//	@JsonIgnore
-//	private List<Historico> historicos;
-//
-//	//bi-directional many-to-one association to Plato
-//	@JsonIgnore
-//	@OneToMany(mappedBy="autor")
-//	private List<Plato> platos;
-//
-//	//bi-directional many-to-one association to Reseña
-//	@JsonIgnore
-//	@OneToMany(mappedBy="usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-//	private List<Resena> reseñas;
 
 	public Usuario() {
 
@@ -91,70 +77,5 @@ public class Usuario implements Serializable {
 		this.rol = rol;
 	}
 
-//	public List<Historico> getHistoricos() {
-//		return this.historicos;
-//	}
-//
-//	public void setHistoricos(List<Historico> historicos) {
-//		this.historicos = historicos;
-//	}
-//
-//	public Historico addHistorico(Historico historico) {
-//		getHistoricos().add(historico);
-//		historico.setUsuario(this);
-//
-//		return historico;
-//	}
-//
-//	public Historico removeHistorico(Historico historico) {
-//		getHistoricos().remove(historico);
-//		historico.setUsuario(null);
-//
-//		return historico;
-//	}
-//
-//	public List<Plato> getPlatos() {
-//		return this.platos;
-//	}
-//
-//	public void setPlatos(List<Plato> platos) {
-//		this.platos = platos;
-//	}
-////
-//	public Plato addPlato(Plato plato) {
-//		getPlatos().add(plato);
-//		plato.setAutor(this);
-//
-//		return plato;
-//	}
-//
-//	public Plato removePlato(Plato plato) {
-//		getPlatos().remove(plato);
-//		plato.setAutor(null);
-//
-//		return plato;
-//	}
-//
-//	public List<Resena> getReseñas() {
-//		return this.reseñas;
-//	}
-//
-//	public void setReseñas(List<Resena> reseñas) {
-//		this.reseñas = reseñas;
-//	}
-//
-//	public Resena addReseña(Resena reseña) {
-//		getReseñas().add(reseña);
-//		reseña.setUsuario(this);
-//
-//		return reseña;
-//	}
-//
-//	public Resena removeReseña(Resena reseña) {
-//		getReseñas().remove(reseña);
-//		reseña.setUsuario(null);
-//
-//		return reseña;
-//	}
 
 }
